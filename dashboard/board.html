@@ -1,0 +1,1685 @@
+<title>성안 세무 콘텐츠 캘린더</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+
+<style>
+:root{
+  --paper:#F6F8F7; --surface:#FFFFFF; --surface-2:#EFF3F2;
+  --ink:#16211F; --ink-2:#3D4B48; --muted:#6B7674;
+  --line:#DFE5E3; --line-strong:#C6D0CD;
+  --accent:#0D6E63; --accent-soft:#E2EFEC; --accent-ink:#FFFFFF;
+  --amber:#98620A; --amber-soft:#F7EEDF;
+  --rose:#9B3B3B;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0F1514; --surface:#161E1D; --surface-2:#1D2726;
+    --ink:#E7EDEB; --ink-2:#BAC7C4; --muted:#8B9C99;
+    --line:#25302E; --line-strong:#394644;
+    --accent:#54B7A8; --accent-soft:#172E2A; --accent-ink:#0F1514;
+    --amber:#D3A153; --amber-soft:#2A2318;
+    --rose:#CF8080;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0F1514; --surface:#161E1D; --surface-2:#1D2726;
+  --ink:#E7EDEB; --ink-2:#BAC7C4; --muted:#8B9C99;
+  --line:#25302E; --line-strong:#394644;
+  --accent:#54B7A8; --accent-soft:#172E2A; --accent-ink:#0F1514;
+  --amber:#D3A153; --amber-soft:#2A2318;
+  --rose:#CF8080;
+}
+
+*{box-sizing:border-box}
+body{margin:0; background:var(--paper); color:var(--ink);
+  font-family:"IBM Plex Sans KR","Malgun Gothic",system-ui,sans-serif;
+  font-size:15px; line-height:1.7; -webkit-font-smoothing:antialiased}
+.wrap{max-width:1040px; margin:0 auto; padding:0 20px 80px}
+:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+button{font-family:inherit}
+
+header{padding:40px 0 0}
+.eyebrow{font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--accent); margin:0 0 12px}
+h1{font-family:"Gowun Batang","Batang",serif; font-weight:700;
+  font-size:clamp(26px,4.2vw,34px); line-height:1.3; margin:0 0 10px}
+.thesis{font-family:"Gowun Batang",serif; font-size:15.5px; line-height:1.8; color:var(--ink-2);
+  margin:0; padding-left:14px; border-left:2px solid var(--accent); max-width:56ch}
+.strip{display:flex; align-items:center; gap:9px; flex-wrap:wrap; margin:20px 0 0;
+  font-size:12.5px; color:var(--muted)}
+.dot{width:7px; height:7px; border-radius:50%; background:var(--muted); flex:none}
+.dot.on{background:var(--accent)}
+#flash{color:var(--accent); opacity:0; transition:opacity .25s; font-weight:500}
+#flash.show{opacity:1}
+
+.tabs{display:flex; margin:24px 0 0; border-bottom:1px solid var(--line)}
+.tab{background:none; border:0; border-bottom:2px solid transparent; font-size:14px;
+  font-weight:500; color:var(--muted); padding:10px 16px; cursor:pointer; margin-bottom:-1px}
+.tab[aria-selected="true"]{color:var(--ink); border-bottom-color:var(--accent)}
+.tab:hover{color:var(--ink)}
+
+section{padding-top:28px}
+h2{font-family:"Gowun Batang",serif; font-weight:700; font-size:20px; margin:0 0 5px}
+.sub{color:var(--muted); font-size:13.5px; margin:0 0 20px; max-width:66ch}
+
+/* 지금 할 일 */
+.now{background:var(--accent-soft); border:1px solid var(--accent); padding:18px 20px; margin:0 0 26px}
+.now h3{margin:0 0 4px; font-size:15px; font-weight:600; display:flex; align-items:center; gap:9px}
+.now .badge{font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.05em;
+  background:var(--accent); color:var(--accent-ink); padding:2px 7px}
+.now p{margin:0 0 12px; font-size:13.5px; color:var(--ink-2)}
+.now .row{display:flex; gap:8px; flex-wrap:wrap}
+
+/* 시즌 리스트 */
+.seasons{display:flex; flex-direction:column; gap:1px; background:var(--line); border:1px solid var(--line)}
+.season{background:var(--surface); display:grid; grid-template-columns:64px 1fr auto;
+  gap:0 14px; align-items:center; padding:12px 15px; cursor:pointer; text-align:left;
+  border:0; width:100%; color:inherit; font-size:inherit}
+.season:hover{background:var(--surface-2)}
+.season.hot{background:var(--accent-soft)}
+.season .sid{font-family:"IBM Plex Mono",monospace; font-size:12.5px; font-weight:500; color:var(--accent)}
+.season .sname{font-weight:500; font-size:14.5px}
+.season .smeta{font-size:12.5px; color:var(--muted); margin-top:1px}
+.season .sright{display:flex; align-items:center; gap:8px; flex-wrap:wrap; justify-content:flex-end}
+
+.tag{font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.04em;
+  padding:2px 7px; border:1px solid var(--line-strong); color:var(--muted); white-space:nowrap}
+.tag.hot{color:var(--accent); border-color:var(--accent); font-weight:500}
+.tag.big{color:var(--amber); border-color:var(--amber)}
+.tag.done{background:var(--accent); color:var(--accent-ink); border-color:var(--accent); font-weight:500}
+
+/* 시즌 선택 칩 */
+.chips{display:flex; flex-wrap:wrap; gap:6px; margin:0 0 22px}
+.chip{font-size:12.5px; padding:5px 11px; background:var(--surface); border:1px solid var(--line);
+  color:var(--ink-2); cursor:pointer}
+.chip:hover{border-color:var(--line-strong)}
+.chip[aria-pressed="true"]{background:var(--accent); color:var(--accent-ink);
+  border-color:var(--accent); font-weight:500}
+
+/* 주제 카드 */
+.topics{display:flex; flex-direction:column; gap:12px}
+.topic{background:var(--surface); border:1px solid var(--line)}
+.topic-head{padding:15px 17px; display:grid; grid-template-columns:1fr auto; gap:12px; align-items:start}
+.topic-title{font-size:15.5px; font-weight:600; margin:0 0 4px; line-height:1.5}
+.topic-msg{font-size:13.5px; color:var(--accent); margin:0 0 6px}
+.topic-hook{font-size:13.5px; color:var(--ink-2); margin:0; font-family:"Gowun Batang",serif}
+.topic-acts{display:flex; flex-direction:column; gap:6px; align-items:flex-end}
+.btn{background:none; border:1px solid var(--line-strong); color:var(--ink-2);
+  font-size:12px; padding:4px 11px; cursor:pointer; white-space:nowrap}
+.btn:hover{border-color:var(--ink-2); color:var(--ink)}
+.btn.primary{background:var(--accent); color:var(--accent-ink); border-color:var(--accent); font-weight:500}
+.btn.primary:hover{filter:brightness(1.08)}
+.btn[disabled]{opacity:.45; cursor:default}
+.btn.sm{font-size:11px; padding:3px 9px}
+
+.topic-body{border-top:1px solid var(--line); background:var(--surface-2); padding:16px 17px 18px;
+  display:grid; grid-template-columns:1fr 300px; gap:20px}
+.topic-body[hidden]{display:none}
+.blk h4{font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.08em;
+  text-transform:uppercase; color:var(--muted); margin:0 0 7px; font-weight:500}
+.blk + .blk{margin-top:16px}
+.blk p{margin:0; font-size:13.5px; color:var(--ink-2)}
+.blk ol,.blk ul{margin:0; padding-left:18px; font-size:13.5px; color:var(--ink-2)}
+.blk li{margin-bottom:4px}
+.blk .verify li{color:var(--amber)}
+.blk .next li{color:var(--muted)}
+
+/* 지침 */
+.guide-box{background:var(--surface); border:1px solid var(--line); padding:18px 20px; margin:0 0 20px}
+.guide-box label{display:block; font-family:"IBM Plex Mono",monospace; font-size:10.5px;
+  letter-spacing:.08em; text-transform:uppercase; color:var(--muted); margin-bottom:7px}
+textarea{width:100%; font-family:inherit; font-size:14px; line-height:1.75; color:var(--ink);
+  background:var(--surface-2); border:1px solid var(--line-strong); padding:12px 14px;
+  border-radius:0; resize:vertical}
+textarea:focus{outline:none; border-color:var(--accent)}
+textarea:disabled{opacity:.55}
+#globalGuide{min-height:200px}
+.preset{display:flex; flex-wrap:wrap; gap:6px; margin-top:12px}
+.preset button{font-size:12px; padding:4px 10px; background:var(--surface-2);
+  border:1px dashed var(--line-strong); color:var(--muted); cursor:pointer}
+.preset button:hover{border-style:solid; color:var(--ink); border-color:var(--accent)}
+
+/* 주제 추가 */
+.addbox{background:var(--surface); border:1px dashed var(--line-strong); padding:16px 18px}
+.addbox.open{border-style:solid; border-color:var(--accent)}
+.addbox > .head{display:flex; justify-content:space-between; align-items:center; gap:12px}
+.addbox h4{margin:0; font-size:14px; font-weight:600}
+.addbox .form{margin-top:14px; display:flex; flex-direction:column; gap:9px}
+.addbox .form[hidden]{display:none}
+.addbox label{font-family:"IBM Plex Mono",monospace; font-size:10px; letter-spacing:.07em;
+  text-transform:uppercase; color:var(--muted); display:block; margin-bottom:4px}
+.addbox input, .addbox textarea{width:100%; font-family:inherit; font-size:13.5px; color:var(--ink);
+  background:var(--surface-2); border:1px solid var(--line-strong); padding:8px 11px; border-radius:0}
+.addbox input:focus, .addbox textarea:focus{outline:none; border-color:var(--accent)}
+.addbox textarea{min-height:60px; resize:vertical; line-height:1.65}
+.addbox .acts{display:flex; gap:8px; align-items:center; margin-top:3px}
+.addbox .hint{font-size:12px; color:var(--muted); margin:0}
+.topic.custom{border-left:2px solid var(--accent)}
+.tag.mine{color:var(--accent); border-color:var(--accent); border-style:dashed}
+.btn.danger{color:var(--rose); border-color:var(--rose)}
+.btn.danger:hover{background:var(--rose); color:var(--surface); border-color:var(--rose)}
+
+/* 검토 상태 */
+.tag.rev{background:var(--accent); color:var(--accent-ink); border-color:var(--accent); font-weight:500}
+.tag.shot{color:var(--muted); border-color:var(--line-strong)}
+.tag.left{color:var(--amber); border-color:var(--amber)}
+.rvgroup{margin-bottom:30px}
+.rvgroup > h3{font-size:14px; font-weight:600; margin:0 0 4px; display:flex; align-items:center; gap:9px}
+.rvgroup > p{margin:0 0 14px; font-size:13px; color:var(--muted)}
+.rvlist{display:flex; flex-direction:column; gap:1px; background:var(--line); border:1px solid var(--line)}
+.rvrow{background:var(--surface); display:grid; grid-template-columns:70px 1fr auto; gap:0 14px;
+  align-items:center; padding:12px 15px}
+.rvrow .sid{font-family:"IBM Plex Mono",monospace; font-size:11.5px; color:var(--accent)}
+.rvrow .rtitle{font-size:14.5px; font-weight:500}
+.rvrow .rmeta{font-size:12.5px; color:var(--muted); margin-top:1px}
+.rvrow .racts{display:flex; gap:7px; align-items:center; flex-wrap:wrap; justify-content:flex-end}
+.rvempty{background:var(--surface); border:1px dashed var(--line-strong); padding:22px;
+  text-align:center; color:var(--muted); font-size:13.5px}
+.shotlist{opacity:.72}
+
+.btn.warnbtn{background:var(--amber); color:var(--surface); border-color:var(--amber); font-weight:500}
+
+/* 보기 전환 */
+.viewsw{display:inline-flex; border:1px solid var(--line-strong); margin:0 0 16px}
+.vbtn{background:none; border:0; font-size:12.5px; color:var(--muted); padding:5px 14px; cursor:pointer}
+.vbtn[aria-pressed="true"]{background:var(--accent); color:var(--accent-ink); font-weight:500}
+
+/* 주제 설정 줄 */
+.tset{grid-column:1/-1; border-top:1px dotted var(--line-strong); padding-top:14px; margin-top:4px;
+  display:flex; gap:14px; flex-wrap:wrap; align-items:flex-end}
+.tset .f{display:flex; flex-direction:column; gap:4px}
+.tset label{font-family:"IBM Plex Mono",monospace; font-size:10px; letter-spacing:.07em;
+  text-transform:uppercase; color:var(--muted)}
+.tset select, .tset input[type="date"]{font-family:inherit; font-size:12.5px; color:var(--ink);
+  background:var(--surface); border:1px solid var(--line-strong); padding:5px 9px; border-radius:0}
+.tset select:focus, .tset input:focus{outline:none; border-color:var(--accent)}
+.tset select:disabled, .tset input:disabled{opacity:.5}
+
+/* 시리즈 */
+.sercard{background:var(--surface); border:1px solid var(--line); margin-bottom:12px}
+.sercard.editing{border-color:var(--accent)}
+.serhead{padding:15px 17px; display:grid; grid-template-columns:1fr auto; gap:12px; align-items:start}
+.serhead .stitle{font-family:"Gowun Batang",serif; font-size:17px; font-weight:700; margin:0 0 3px}
+.serhead .sname{font-size:12.5px; color:var(--accent); margin:0 0 5px; font-family:"IBM Plex Mono",monospace}
+.serhead .sdesc{font-size:13.5px; color:var(--ink-2); margin:0}
+.serbody{border-top:1px solid var(--line); background:var(--surface-2); padding:14px 17px}
+.serform{display:flex; flex-direction:column; gap:9px; padding:14px 17px; border-top:1px solid var(--line)}
+.serform label{font-family:"IBM Plex Mono",monospace; font-size:10px; letter-spacing:.07em;
+  text-transform:uppercase; color:var(--muted); display:block; margin-bottom:4px}
+.serform input, .serform textarea{width:100%; font-family:inherit; font-size:13.5px; color:var(--ink);
+  background:var(--surface); border:1px solid var(--line-strong); padding:8px 11px; border-radius:0}
+.serform textarea{min-height:52px; resize:vertical}
+.serform input:focus, .serform textarea:focus{outline:none; border-color:var(--accent)}
+.serlist{display:flex; flex-direction:column; gap:6px; margin-top:4px}
+.seritem{display:flex; justify-content:space-between; gap:12px; align-items:center;
+  font-size:13.5px; padding:6px 0; border-bottom:1px dotted var(--line-strong)}
+.seritem:last-child{border-bottom:0}
+.tag.ser{color:var(--accent); border-color:var(--accent)}
+
+/* 발행 일정 */
+.daygroup{margin-bottom:26px}
+.dayhead{display:flex; align-items:baseline; gap:10px; margin:0 0 8px; padding-bottom:6px;
+  border-bottom:1px solid var(--line)}
+.dayhead .d{font-family:"IBM Plex Mono",monospace; font-size:15px; font-weight:500;
+  font-variant-numeric:tabular-nums}
+.dayhead .w{font-size:12.5px; color:var(--muted)}
+.dayhead .rel{font-size:12px; color:var(--accent); margin-left:auto}
+.dayhead .rel.past{color:var(--muted)}
+
+/* 모달 */
+.modal{position:fixed; inset:0; z-index:50; background:rgba(10,18,17,.55);
+  display:flex; justify-content:center; padding:24px 16px}
+.modal[hidden]{display:none}
+.sheet{background:var(--surface); border:1px solid var(--line-strong); width:100%;
+  max-width:840px; display:flex; flex-direction:column; box-shadow:0 24px 60px -20px rgba(0,0,0,.5)}
+.sheet-head{display:flex; align-items:center; gap:11px; flex-wrap:wrap; padding:13px 18px;
+  border-bottom:1px solid var(--line); background:var(--surface-2)}
+.sheet-head .code{font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--accent); font-weight:500}
+.sheet-head .name{font-size:14.5px; font-weight:600; flex:1; min-width:150px}
+.sheet-body{overflow-y:auto; padding:24px 28px 32px; flex:1}
+.sheet-body textarea{min-height:56vh; font-family:"IBM Plex Mono",monospace; font-size:13px}
+.sheet-foot{padding:12px 18px; border-top:1px solid var(--line); background:var(--surface-2);
+  display:flex; flex-direction:column; gap:9px}
+.sheet-foot .fbrow{display:grid; grid-template-columns:1fr 1fr; gap:14px}
+.sheet-foot .fbacts{display:flex; gap:10px; align-items:center; flex-wrap:wrap}
+.sheet-foot #sheetState{font-size:12px; color:var(--muted)}
+.sheet-foot .fb{min-width:0}
+.sheet-foot .fbhead{display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:5px}
+.sheet-foot .fbhead label{margin-bottom:0}
+.sheet-foot .fbnote{margin:5px 0 0; font-size:11.5px; color:var(--accent); min-height:14px}
+.sheet-foot textarea.dropping{border-color:var(--accent); background:var(--accent-soft)}
+@media (max-width:700px){ .sheet-foot .fbrow{grid-template-columns:1fr} }
+.sheet-foot .fb label{display:block; font-family:"IBM Plex Mono",monospace; font-size:10px;
+  letter-spacing:.07em; text-transform:uppercase; color:var(--muted); margin-bottom:5px}
+.sheet-foot textarea{min-height:52px; font-size:13px}
+
+.md{font-size:15px; line-height:1.85; max-width:62ch}
+.md h1{font-family:"Gowun Batang",serif; font-size:23px; font-weight:700; margin:0 0 8px}
+.md h2{font-family:"Gowun Batang",serif; font-size:18px; font-weight:700; margin:30px 0 9px;
+  padding-top:14px; border-top:1px solid var(--line)}
+.md h3{font-size:15px; font-weight:600; margin:22px 0 6px; color:var(--accent)}
+.md p{margin:0 0 13px}
+.md ul,.md ol{margin:0 0 13px; padding-left:20px}
+.md li{margin-bottom:4px}
+.md blockquote{margin:0 0 15px; padding:9px 13px; background:var(--surface-2);
+  border-left:2px solid var(--line-strong); font-size:13.5px; color:var(--ink-2)}
+.md blockquote p:last-child{margin:0}
+.md hr{border:0; border-top:1px solid var(--line); margin:24px 0}
+.md strong{font-weight:600}
+.md .tblwrap{overflow-x:auto; margin:0 0 16px}
+.md table{border-collapse:collapse; width:100%; font-size:13.5px}
+.md th,.md td{border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top}
+.md th{background:var(--surface-2); font-weight:600; white-space:nowrap}
+.md code{font-family:"IBM Plex Mono",monospace; font-size:12.5px; background:var(--surface-2);
+  padding:1px 5px; border:1px solid var(--line)}
+.mk{font-family:"IBM Plex Mono",monospace; font-size:11px; padding:1px 6px; margin-right:5px;
+  white-space:nowrap; border:1px solid}
+.mk.tc{color:var(--accent); border-color:var(--accent); background:var(--accent-soft); font-weight:500}
+.mk.sub{color:var(--accent); border-color:var(--accent)}
+.mk.gfx{color:var(--muted); border-color:var(--line-strong)}
+.mk.chk{color:var(--amber); border-color:var(--amber); background:var(--amber-soft); font-weight:500}
+
+.banner{background:var(--amber-soft); border-left:2px solid var(--amber); padding:12px 16px;
+  margin:0 0 20px; font-size:13.5px}
+.banner[hidden]{display:none}
+.note{background:var(--surface-2); border-left:2px solid var(--line-strong); padding:14px 16px;
+  margin:20px 0 0; font-size:13.5px; line-height:1.75}
+.note.teal{background:var(--accent-soft); border-left-color:var(--accent)}
+.spin{display:inline-block; width:11px; height:11px; border:2px solid var(--line-strong);
+  border-top-color:var(--accent); border-radius:50%; animation:sp .7s linear infinite; vertical-align:-1px}
+@keyframes sp{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.spin{animation:none}}
+
+footer{margin-top:46px; padding-top:20px; border-top:1px solid var(--line);
+  font-size:12.5px; color:var(--muted)}
+footer code{font-family:"IBM Plex Mono",monospace}
+
+@media (max-width:760px){
+  .topic-body{grid-template-columns:1fr}
+  .season{grid-template-columns:56px 1fr; row-gap:8px}
+  .season .sright{grid-column:2; justify-content:flex-start}
+  .modal{padding:0}
+  .sheet-body{padding:18px 16px 26px}
+}
+</style>
+
+<div class="wrap">
+
+<header>
+  <p class="eyebrow">세무회계 성안 · 김지은 세무사</p>
+  <h1>세무 콘텐츠 캘린더</h1>
+  <p class="thesis">세법을 설명하는 채널이 아니라, 대표가 더 좋은 사업 판단을 할 수 있도록 돕는 채널.</p>
+  <div class="strip">
+    <span class="dot" id="connDot"></span><span id="connText">연결 중…</span>
+    <span id="flash">저장됨</span>
+  </div>
+  <div class="tabs" role="tablist">
+    <button class="tab" role="tab" aria-selected="true" data-tab="cal">시즌 캘린더</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="top">주제 · 파생</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="ser">시리즈</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="sch">발행 일정</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="gui">대본 지침</button>
+  </div>
+</header>
+
+<!-- 시즌 캘린더 -->
+<section id="tab-cal">
+  <div class="now" id="nowBox"></div>
+
+  <h2>연간 시즌</h2>
+  <p class="sub">세무 콘텐츠의 검색량은 신고 시즌에 몰립니다. 그래서 <b>발행일은 마감일 3~4주 전</b>입니다. 마감일에 올리면 이미 늦습니다.</p>
+  <div class="seasons" id="seasonList"></div>
+
+  <div class="note teal">
+    <b>시즌 60% · 상시 40%.</b> 시즌만 하면 비수기에 채널이 죽고, 상시만 하면 검색이 몰리는 기회를 놓칩니다.
+    상시 주제 15편도 시즌과 똑같이 대본을 만들 수 있습니다. 시즌 목록 맨 아래 <b>상시 주제</b>를 누르세요.
+  </div>
+  <div class="note">
+    <b>시즌 콘텐츠는 매년 반복됩니다.</b> 연도와 금액만 자막으로 처리하면 본체는 그대로 재활용할 수 있습니다.
+    부가세 1기와 2기(S4·S9, S1·S7)는 구조가 같아서 한 번에 찍어두면 효율적입니다.
+  </div>
+</section>
+
+<!-- 주제 · 파생 -->
+<section id="tab-top" hidden>
+  <h2>주제와 파생</h2>
+  <p class="sub">시즌을 고르면 그 시즌의 주제가 나옵니다. 주제를 펼치면 롱폼 구성·숏폼 3편·후속 주제까지 이어집니다.</p>
+  <div class="viewsw">
+    <button class="vbtn" data-view="season" aria-pressed="true">시즌별</button>
+    <button class="vbtn" data-view="series" aria-pressed="false">시리즈별</button>
+  </div>
+  <div class="chips" id="seasonChips"></div>
+  <div class="topics" id="topicList"></div>
+</section>
+
+<!-- 시리즈 -->
+<section id="tab-ser" hidden>
+  <h2>시리즈</h2>
+  <p class="sub">주제를 묶는 축입니다. 시즌이 "언제 올릴까"라면 시리즈는 "누구에게 이어서 보여줄까"입니다. 유튜브 재생목록과 그대로 이어집니다.</p>
+  <div id="seriesBody"></div>
+
+  <div class="note teal">
+    <b>시리즈 이름은 두 가지로 적습니다.</b>
+    관리용 이름(<code>최초창업 시리즈</code>)과 화면에 나갈 제목(<code>사장님, 사업 처음이시죠?</code>)입니다.
+    관리용은 보드에서 찾기 위한 것이고, 화면 제목은 재생목록 이름과 영상 제목 앞머리에 씁니다.
+  </div>
+</section>
+
+<!-- 발행 일정 -->
+<section id="tab-sch" hidden>
+  <h2>발행 일정</h2>
+  <p class="sub">검토를 마친 대본에 촬영일과 업로드일을 잡습니다. 업로드 날짜별로 그날 나갈 영상이 묶여 보입니다.</p>
+  <div id="schedBody"></div>
+</section>
+
+<!-- 대본 지침 -->
+<section id="tab-gui" hidden>
+  <div class="banner" id="roBanner" hidden>
+    <b>읽기 전용 공유본입니다.</b> 고친 내용은 저장되지 않습니다.
+    편집은 세무사님 원본 보드에서 이루어지고, 이 페이지는 그 내용을 옮겨 담은 사본입니다.
+  </div>
+
+  <h2>대본 작성 지침</h2>
+  <p class="sub">여기 적은 내용이 <b>모든 대본 생성에 그대로 적용</b>됩니다. 나온 대본이 마음에 안 들면 여기에 한 줄 추가하고 다시 만드세요. 쌓일수록 대본이 취향에 맞아집니다.</p>
+
+  <div class="guide-box">
+    <label for="globalGuide">공통 지침</label>
+    <textarea id="globalGuide" placeholder="예)
+- 숫자는 만 단위로 끊어 읽기 좋게 써주세요
+- 사례를 들 때 업종을 구체적으로 지정해주세요
+- 문장을 더 짧게, 한 문장에 한 가지만
+- '~하시면 됩니다' 보다 '~합니다'로 단정적으로"></textarea>
+    <div class="preset" id="presetRow"></div>
+  </div>
+
+  <div class="note teal">
+    <b>대본 화면 아래에는 칸이 두 개 있습니다.</b><br>
+    왼쪽 <b>이 편에만 적용할 지침</b> — 특정 편에만 적용할 요청. 공통 지침보다 우선합니다.<br>
+    오른쪽 <b>내가 쓴 원고</b> — 직접 쓰신 원고를 붙여넣거나 md 파일로 올린 뒤
+    <b>대본 형식으로 정리</b>를 누릅니다.
+  </div>
+
+  <div class="note">
+    <b>대본을 만드는 두 가지 방법.</b><br><br>
+    <b>① 대본 만들기 / 다시 만들기</b> — 주제 정보로 처음부터 씁니다.<br><br>
+    <b>② 대본 형식으로 정리</b> — <u>원고의 문장을 그대로 둡니다.</u>
+    말투를 고치지도, 요약하지도, 늘리지도 않습니다. 하는 일은 이것뿐입니다.
+    <ul style="margin:8px 0 0;padding-left:18px">
+      <li>단락을 나누고 타임코드를 붙입니다</li>
+      <li>자막으로 쓸 문장을 원문에서 골라 <code>[자막]</code> 줄을 덧붙입니다</li>
+      <li>세법 수치 옆에 <code>[수치검증]</code>, 판단이 빈 자리에 <code>[촬영 전 확인]</code>을 덧붙입니다</li>
+      <li>오탈자와 띄어쓰기만 고칩니다</li>
+    </ul>
+    <br>올린 원고는 그대로 남아 있습니다. 결과가 마음에 안 들면 다시 누르면 됩니다.
+  </div>
+
+  <div class="note">
+    <b>대본에 남는 두 가지 표시.</b>
+    <code>[수치검증]</code> 은 세율·한도처럼 최신 세법 확인이 필요한 자리,
+    <code>[촬영 전 확인]</code> 은 "저라면 이렇게 합니다"에 들어갈 판단이 비어 있는 자리입니다.
+    구조와 화법은 만들어 드리지만, 판단과 숫자는 세무사님 것입니다.
+  </div>
+</section>
+
+<footer>
+  주제 데이터 <code>season/topics.json</code> · 캘린더 <code>season/00_세무캘린더.md</code> · 브랜드 규칙 <code>planning/00_브랜드_규칙집.md</code>
+</footer>
+
+</div>
+
+<div class="modal" id="modal" hidden role="dialog" aria-modal="true" aria-labelledby="sheetName">
+  <div class="sheet">
+    <div class="sheet-head">
+      <span class="code" id="sheetCode"></span>
+      <span class="name" id="sheetName"></span>
+      <button class="btn" id="btnEdit">고치기</button>
+      <button class="btn" id="btnRegen">다시 만들기</button>
+      <button class="btn" id="btnReview">검토 완료</button>
+      <button class="btn" id="btnShot" hidden>촬영 완료</button>
+      <button class="btn" id="btnClose">닫기</button>
+    </div>
+    <div class="sheet-body" id="sheetBody"></div>
+    <div class="sheet-foot">
+      <div class="fbrow">
+        <div class="fb">
+          <label for="topicGuide">이 편에만 적용할 지침 — 적고 <b>다시 만들기</b></label>
+          <textarea id="topicGuide" placeholder="예) 후킹을 더 세게. 사례를 음식점으로 바꿔주세요."></textarea>
+        </div>
+        <div class="fb">
+          <div class="fbhead">
+            <label for="draftIn">내가 쓴 원고</label>
+            <button class="btn sm" id="btnFile">md 파일 올리기</button>
+          </div>
+          <textarea id="draftIn" placeholder="붙여넣거나, md 파일을 여기로 끌어다 놓으세요.
+문장은 그대로 두고 단락·타임코드·확인 표시만 붙입니다."></textarea>
+          <input type="file" id="fileIn" accept=".md,.markdown,.txt,text/markdown,text/plain" hidden>
+          <p class="fbnote" id="fileNote"></p>
+        </div>
+      </div>
+      <div class="fbacts">
+        <button class="btn primary" id="btnPolish">대본 형식으로 정리</button>
+        <button class="btn" id="btnAsIs">그대로 대본에 넣기</button>
+        <span id="sheetState"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+"use strict";
+
+/* ── 브랜드 규칙 — 대본 생성 프롬프트의 뼈대 ───────────────── */
+const BRAND = `채널: 세무회계 성안 / 출연 김지은 세무사 (여성, 실무 10년차)
+한 줄 정의: 세법을 설명하는 채널이 아니라, 대표가 더 좋은 사업 판단을 할 수 있도록 돕는 채널.
+
+타깃: 창업 1~5년차, 매출이 늘며 세부담이 커지기 시작한 30~40대 개인사업자·법인 대표.
+"세금을 싸게 신고해주는 세무사"가 아니라 "내 사업 상황을 이해하고 같이 판단해주는 세무사"를 찾는 사람.
+
+캐릭터 배합: 전문성 40 / 현실적 조언 30 / 편안함 20 / 인간미 10
+
+반드시 쓸 화법 (편당 최소 2개):
+- "대표님들이 이 부분을 정말 많이 물어보세요."
+- "그런데 여기서 한 가지 꼭 보셔야 합니다."
+- "세법상 가능하다고 해서 무조건 유리한 건 아닙니다."
+- "저라면 이 상황에서는 이렇게 판단할 것 같습니다."
+- "세금만 보고 결정하시면 안 되는 이유가 있습니다."
+
+금지:
+- "안녕하세요, ○○ 세무사입니다. 오늘은 ~에 대해 알아보겠습니다" 식 강의형 오프닝
+- 법조문 인용 후 해설하는 구조
+- 절세를 과장하는 영업형, 세금 폭탄식 공포 조성
+- 한 영상에 주제 두 개
+- 결론 없이 "상담받으세요"로 끝내기
+- 확인되지 않은 세법 수치를 단정적으로 서술
+
+롱폼 구성 (7단계 고정):
+1. [00:00] 문제 제시 — 질문이나 결론으로 시작. 인사 금지
+2. [00:15] 의외성 — 통념을 뒤집는 한마디
+3. [00:40] 오늘 얻을 것 — 시청 후 무엇을 판단할 수 있는지
+4. [00:55] 자기소개 — "사업자 세무를 주로 보는 세무사 김지은입니다." 한 문장
+5. [01:00] 본론 — 소단락 4~6개, 각 단락은 질문으로 시작
+6. 판단 및 결론 — "저라면 ~합니다" 필수. 조건부 결론을 내고 "케이스마다 다릅니다"로 끝내지 않기
+7. CTA — 영업 금지. 오늘 당장 할 수 있는 행동 한 가지
+
+표기 규칙:
+- 화면 자막은 \`[자막] 문구\`
+- 그래픽 필요 지점은 \`[그래픽] 설명\`
+- 세법 수치·요건은 단정하지 말고 \`[수치검증] 확인할 항목\` 으로 표시
+- 세무사 본인의 판단이 필요한 자리는 \`[촬영 전 확인] 무엇을 채워야 하는지\` 로 비워 둘 것
+
+분량: 8분 영상이면 2,400~2,800자, 10분이면 3,000~3,500자 (분당 300~350자 발화 기준)`;
+
+const SHORTS_RULE = `숏폼은 롱폼에서 가장 강한 메시지를 뽑습니다. 별도 기획하지 않습니다.
+구조 (35~50초): [0~3초] 후킹(질문 또는 단정, 배경설명 금지) → [3~10초] 통념 →
+[10~35초] 반전과 근거 하나만 → [35~50초] "저라면 ~합니다" 판단.
+한 숏폼 = 한 문장 메시지. 숫자는 하나만. 자막 강조는 \`[자막]\` 으로 표시.
+"구독 좋아요" 요청으로 끝내지 않습니다.`;
+
+/* ── 데이터 (season/topics.json 과 동일) ───────────────── */
+const DATA = {"seasons":[{"id":"S9","name":"부가세 2기 예정","months":"9~10월","deadline":"10/25","publishAt":"9월 말","target":"법인 중심 (개인은 고지)","size":"소","priority":2,"note":"금액이 크지 않아 관심이 낮습니다. 숏폼 위주로 가볍게, 롱폼은 한 편이면 충분합니다.","topics":[{"id":"S9-1","title":"예정고지서, 그냥 내도 되는 경우와 아닌 경우","message":"매출이 줄었다면 고지서대로 내지 않아도 됩니다.","hook":"매출은 반토막 났는데, 고지서는 작년 기준으로 왔습니다.","angle":"고지서를 받고 '이걸 왜 내지' 싶은 순간을 정확히 잡습니다. 예정신고로 전환하면 줄일 수 있다는 걸 모르는 사업자가 많습니다.","outline":["개인은 고지, 법인은 신고 — 애초에 방식이 다릅니다","고지 금액은 어떻게 정해지나 (직전 과세기간 기준)","매출이 줄었을 때 — 예정신고로 바꿔서 실제 금액으로 낼 수 있습니다","얼마나 줄어야 실익이 있나 — 신고 품이 드는 만큼","안 내면 어떻게 되나 — 가산세와 체납"],"verify":["예정고지 대상 및 기준금액","예정신고 전환 요건(매출 감소 비율)","미납 시 가산세율"],"shorts":["매출 반토막인데 작년 기준 고지서가 왔다면","개인은 고지, 법인은 신고 — 뭐가 다른가","예정고지 안 내면 생기는 일"],"next":["부가세 낼 돈이 없을 때 선택지","예정신고와 확정신고의 관계"]},{"id":"S9-2","title":"부가세를 미리 내는 게 손해일까","message":"예정 납부는 미리 내는 것이지 더 내는 것이 아닙니다.","hook":"부가세를 1년에 네 번 낸다고 세금이 늘어나는 건 아닙니다.","angle":"예정납부를 '추가 세금'으로 오해하는 경우가 많습니다. 자금 계획 관점으로 다시 설명합니다.","outline":["예정과 확정의 관계 — 미리 낸 것은 확정 때 차감됩니다","그런데 자금 흐름에는 영향이 있습니다","부가세는 원래 내 돈이 아니라는 관점","부가세 적립 습관 — 매출 입금 시점에 떼어두기"],"verify":["예정납부액의 확정신고 시 공제 방식"],"shorts":["부가세는 원래 내 돈이 아닙니다","매출 들어올 때마다 10%를 떼어두세요","1년에 네 번 낸다고 세금이 느는 게 아닙니다"],"next":["세금 적립 통장 만들기","부가세 낼 돈이 없을 때"]}]},{"id":"S10","name":"종소세 중간예납","months":"11월","deadline":"11/30","publishAt":"11월 초","target":"개인사업자","size":"소","priority":3,"note":"'이게 뭔가요' 수요가 큽니다. 고지서를 받고 검색하는 사람이 대부분이라 설명형으로.","topics":[{"id":"S10-1","title":"11월에 온 이 고지서, 왜 내야 하나요","message":"5월 세금의 절반을 미리 내는 것이지, 새로 생긴 세금이 아닙니다.","hook":"5월에 다 냈는데 11월에 또 고지서가 왔습니다.","angle":"가장 흔한 오해를 정면으로 풉니다. 새 세금이 아니라 선납이라는 것만 알아도 불안이 사라집니다.","outline":["중간예납이 뭔가 — 작년 세금의 절반을 미리","내년 5월에 정산됩니다 — 더 낸 것은 돌려받습니다","고지 대상에서 빠지는 경우 (소액 기준 등)","올해 사업이 안 좋다면 — 추계액으로 줄여서 신고할 수 있습니다","안 내면 — 가산세"],"verify":["중간예납 고지 기준 및 소액 제외 기준","추계액 신고 요건과 절차","미납 가산세율"],"shorts":["5월에 냈는데 왜 11월에 또 내나요","올해 사업이 안 좋으면 줄일 수 있습니다","중간예납은 내년 5월에 정산됩니다"],"next":["추계액 신고하는 법","세금 적립 통장"]},{"id":"S10-2","title":"올해 사업이 안 좋았다면 중간예납을 줄일 수 있습니다","message":"고지서대로 내지 않고, 실제 실적으로 다시 계산할 수 있습니다.","hook":"작년 기준으로 나온 고지서, 올해 실적이 나쁘면 그대로 내실 필요 없습니다.","angle":"S10-1이 설명이라면 이건 행동입니다. 실익이 있는 사업자를 특정해서 알려줍니다.","outline":["추계액 신고란 — 올해 상반기 실적으로 다시 계산","누가 하면 유리한가 — 매출이 크게 줄어든 경우","얼마나 줄어야 실익이 있나","신고 방법과 기한","주의 — 나중에 실적이 좋아지면 5월에 몰립니다"],"verify":["추계액 신고 요건","신고 기한","추계액 계산 방식"],"shorts":["매출이 줄었으면 중간예납도 줄일 수 있습니다","추계액 신고, 이런 분이 하시면 됩니다","줄였다가 5월에 몰릴 수 있습니다"],"next":["5월 종소세 대비","월별 이익 확인 습관"]}]},{"id":"S11","name":"결산·절세 마감","months":"11~12월","deadline":"12/31","publishAt":"11월 중순","target":"전체","size":"대","priority":1,"note":"★ 검색량은 5월보다 작지만 타깃 적합도가 최고입니다. '지금 뭔가 해야 한다'고 느끼는 사업자가 검색합니다. 상담 전환이 가장 잘 되는 시즌이라, 채널이 작을 때는 여기에 집중하는 게 효율적입니다.","topics":[{"id":"S11-1","title":"12월에 하면 되고 1월에 하면 안 되는 것","message":"절세의 마감선은 12월 31일입니다. 하루 차이로 1년이 갈립니다.","hook":"1월 2일에 산 장비는 올해 비용이 되지 않습니다.","angle":"이 시즌의 대문 영상. 날짜 하나로 결과가 갈린다는 걸 구체적으로 보여줍니다. 시청자가 달력을 보게 만드는 것이 목표입니다.","outline":["손익귀속시기 — 언제 발생했느냐가 기준입니다","12월에 결정하면 올해, 1월이면 내년 (장비·비품·수선)","결제일이 아니라 인도일·사용가능일 기준인 것들","계약만 하고 넘어가면 안 되는 이유","12월에 서둘러서는 안 되는 것 — 급하게 만든 비용은 소명이 안 됩니다"],"verify":["손익귀속시기 판단 기준","감가상각 개시 시점(사업에 사용한 날)","선급비용의 처리"],"shorts":["1월 2일에 산 장비는 올해 비용이 아닙니다","결제일이 아니라 이 날짜를 봅니다","12월에 급하게 만든 비용이 위험한 이유"],"next":["연말 장비 구입의 실제 절세 효과","결산 전 정리해야 할 계정"]},{"id":"S11-2","title":"연말에 장비 사면 세금이 줄어든다는 말, 반은 맞습니다","message":"1억을 써도 올해 비용은 1억이 아닙니다.","hook":"1억짜리 기계를 샀는데, 올해 비용으로 인정되는 건 2천만원입니다.","angle":"가장 흔한 연말 절세 오해입니다. 감가상각을 모르고 큰돈을 쓰는 대표가 매년 나옵니다. 숫자 하나로 충격을 주고 정확히 설명합니다.","outline":["감가상각 — 나눠서 비용이 됩니다","1억을 써도 올해 비용은 일부","그런데 예외가 있습니다 — 즉시상각 특례, 소액자산","중소기업이 쓸 수 있는 것들","그래서 12월 지출은 '세금'이 아니라 '자금'으로 판단해야 합니다"],"verify":["감가상각 내용연수 및 상각률","즉시상각의제 대상과 한도","소액자산 즉시비용 기준금액","중소기업 투자 관련 세액공제"],"shorts":["1억 썼는데 올해 비용은 2천만원입니다","이 금액 아래면 한 번에 비용 처리됩니다","12월 지출은 세금이 아니라 자금으로 판단하세요"],"next":["투자 세액공제 챙기기","리스·렌트·구매 비교"]},{"id":"S11-3","title":"올해 이익이 많이 났을 때, 12월에 할 수 있는 것","message":"쓰는 것 말고도 방법이 있습니다.","hook":"이익이 많이 났다고 12월에 무조건 돈을 쓰실 필요는 없습니다.","angle":"'절세 = 돈 쓰기'라는 공식을 깹니다. 지출 없이 또는 적은 지출로 가능한 것들을 정리해 실질적인 도움을 줍니다.","outline":["직원 성과급 — 12월에 확정하면 올해 비용","퇴직연금 납입","노란우산공제 — 단, 무조건 유리한 건 아닙니다","미지급비용 — 발생했는데 아직 안 낸 것들","받을 수 없게 된 돈 정리 (대손)","그리고 하지 말아야 할 것 — 가공경비"],"verify":["성과급 손금 인정 요건(지급 확정)","퇴직연금 납입 한도 및 공제","노란우산공제 소득공제 한도","대손 요건"],"shorts":["이익 많이 났다고 돈부터 쓰지 마세요","성과급은 12월에 확정하면 올해 비용입니다","노란우산공제, 무조건 유리한 건 아닙니다"],"next":["노란우산공제 제대로 보기","성과급 지급 규정 만들기"]},{"id":"S11-4","title":"결산 전에 반드시 정리해야 할 세 가지","message":"결산은 숫자를 맞추는 게 아니라 설명 가능하게 만드는 일입니다.","hook":"결산서에 이 세 항목이 남아 있으면, 내년에 문제가 됩니다.","angle":"가지급금·재고·미수금. 매년 미루면 눈덩이가 되는 항목들입니다. 지금이 정리 시점이라는 걸 알려줍니다.","outline":["가지급금 — 놔두면 이자가 붙습니다","재고 — 실제 있는지 확인하셨나요","미수금·미지급금 — 받을 수 없는 것은 정리","이 세 개가 쌓이면 벌어지는 일","대표가 결산서에서 봐야 할 세 줄"],"verify":["가지급금 인정이자율","재고자산 평가 방법","대손처리 요건과 증빙"],"shorts":["결산서에서 대표님이 봐야 할 세 줄","가지급금은 12월에 정리하세요","장부의 재고, 실제로 있으신가요"],"next":["가지급금 정리 방법","재고 관리와 세금"]},{"id":"S11-5","title":"내년에 법인전환을 생각하신다면, 12월에 결정하셔야 합니다","message":"법인전환은 시점 선택이 절반입니다.","hook":"법인전환은 아무 때나 하는 게 아니라, 유리한 시점이 있습니다.","angle":"상시 주제인 법인전환을 시즌에 연결합니다. 연말은 결정 시점이라는 각도로 새로 잡습니다.","outline":["왜 연말·연초가 전환 시점인가 — 사업연도 단위","12월에 결정하면 준비할 수 있는 것들","성실신고 대상이 되기 전에 판단하는 이유","급하게 전환했을 때 생기는 문제","저라면 이 조건에서 검토합니다"],"verify":["법인전환 방식별 조세특례 요건","사업연도 설정","성실신고확인 대상 기준"],"shorts":["법인전환에도 유리한 시점이 있습니다","성실신고 대상이 되기 전에 판단하세요","급하게 전환하면 생기는 문제"],"next":["법인전환 판단 기준","개인 vs 법인 실효세율"]}]},{"id":"S1","name":"부가세 2기 확정","months":"12~1월","deadline":"1/25","publishAt":"12월 말","target":"개인·법인 전체","size":"중","priority":4,"note":"매년 반복됩니다. 한 번 잘 만들면 연도 표기만 바꿔 재활용할 수 있습니다.","topics":[{"id":"S1-1","title":"부가세 신고 전에 확인할 다섯 가지","message":"신고 전 한 시간이 신고 후 한 달을 아낍니다.","hook":"부가세는 자료를 다 넘긴 뒤에는 고칠 게 없습니다.","angle":"체크리스트형. 실용적이고 매년 재활용 가능합니다.","outline":["매출 누락 — 플랫폼·현금·계좌이체까지","매입 증빙 — 세금계산서 수취 기한","카드·현금영수증 사용 내역 확인","공제 안 되는 매입 걸러내기","낼 돈 준비 — 신고와 납부는 다릅니다"],"verify":["세금계산서 수취 기한 및 지연수취 가산세","매입세액 불공제 유형"],"shorts":["부가세 신고 전 이것부터 확인하세요","세금계산서를 늦게 받으면 생기는 일","신고와 납부는 다릅니다"],"next":["매입세액 불공제 유형 정리","부가세 낼 돈이 없을 때"]},{"id":"S1-2","title":"부가세 낼 돈이 없을 때","message":"안 내는 것보다 나눠 내는 게 낫습니다.","hook":"신고는 했는데 낼 돈이 없다면, 그냥 두지 마세요.","angle":"실제로 많이 겪는데 검색은 부끄러워서 못 하는 주제입니다. 담담하게 선택지를 알려줍니다.","outline":["신고는 반드시 하세요 — 신고 안 함과 납부 못 함은 다릅니다","분납·징수유예 제도","카드 납부","체납이 쌓이면 벌어지는 일","애초에 안 생기게 — 부가세 적립"],"verify":["부가세 분납 요건","징수유예 신청 요건","납부지연 가산세율","카드 납부 수수료"],"shorts":["낼 돈이 없어도 신고는 하세요","무신고와 미납은 가산세가 다릅니다","매출 들어올 때 10%를 떼어두세요"],"next":["세금 적립 통장","체납 정리 순서"]}]},{"id":"S3","name":"법인세","months":"2~3월","deadline":"3/31","publishAt":"2월 중순","target":"법인","size":"중","priority":5,"note":"대상이 법인으로 명확합니다. 채널 타깃과 정확히 겹치는 시즌입니다.","topics":[{"id":"S3-1","title":"법인세 신고 전에 대표가 확인해야 할 것","message":"세무사가 하는 일이지만, 대표가 봐야 하는 항목이 있습니다.","hook":"결산서를 받으시면 이 세 줄만 보세요.","angle":"'세무사가 알아서 하겠지'와 '대표가 다 알아야 한다' 사이의 현실적인 지점을 잡습니다.","outline":["가지급금 — 대표님 이름으로 남은 돈","대표 급여와 상여 — 손금 인정 요건","기업업무추진비 한도 초과분","받을 수 없는 매출채권","감면·공제 항목이 비어 있지 않은지"],"verify":["임원 상여 손금 요건(지급규정)","기업업무추진비 한도","법인세 신고기한 및 분납"],"shorts":["결산서에서 대표님이 봐야 할 세 줄","임원 상여는 규정이 있어야 인정됩니다","감면 칸이 비어 있지는 않나요"],"next":["가지급금 정리","임원 보수 규정 만들기"]},{"id":"S3-2","title":"법인세를 한 번에 못 내겠다면","message":"분납할 수 있습니다. 다만 조건이 있습니다.","hook":"법인세는 나눠 낼 수 있습니다. 대신 이자가 붙습니다.","angle":"S1-2의 법인 버전. 자금이 빠듯한 3월의 현실적 대응.","outline":["분납 요건과 기간","얼마까지 나눌 수 있나","중간예납과의 관계","자금 계획에 넣는 법"],"verify":["법인세 분납 요건 및 기한","납부지연 가산세"],"shorts":["법인세도 나눠 낼 수 있습니다","분납해도 이자는 붙습니다"],"next":["법인세 중간예납","세금 적립"]}]},{"id":"S5","name":"종합소득세","months":"4~5월","deadline":"5/31","publishAt":"4월 초~중순","target":"개인사업자 전체","size":"특대","priority":6,"note":"★ 검색량 최대. 다만 경쟁도 최고입니다. '종합소득세 신고 방법' 같은 일반 키워드는 포화 상태이니, 상황을 좁힌 제목으로 들어가야 합니다. 지금(9월) 만들지 마세요 — 4월에 만들어도 늦지 않고, 그 사이 세법이 바뀝니다.","topics":[{"id":"S5-1","title":"작년보다 세금이 두 배 나온 이유","message":"세율이 오른 게 아니라 구간이 바뀐 겁니다.","hook":"매출은 30% 늘었는데 세금은 두 배가 됐습니다.","angle":"일반 키워드 대신 '내 상황'으로 들어갑니다. 누진세 구조를 체감으로 설명하면 이 시즌에 가장 잘 먹힙니다.","outline":["누진 구조 — 구간을 넘으면 그 위에만 높은 세율","그런데 왜 체감은 두 배인가","장부 방식이 바뀌었을 수도 (추계 → 복식부기)","성실신고 대상이 되었을 수도","내년에 같은 일을 겪지 않으려면"],"verify":["종합소득세 과세표준 구간별 세율","복식부기의무자 기준금액","성실신고확인 대상 기준"],"shorts":["매출 30% 늘었는데 세금이 두 배인 이유","이 금액을 넘으면 장부 방식이 바뀝니다","내년에 같은 일 겪지 않으려면"],"next":["복식부기 vs 간편장부","성실신고 대상 되기 전 준비"]},{"id":"S5-2","title":"매출 3억을 처음 넘긴 해에 벌어지는 일","message":"매출이 특정 선을 넘으면 의무가 한꺼번에 늘어납니다.","hook":"매출이 늘어서 좋았는데, 신고할 게 세 개가 늘었습니다.","angle":"성장하는 사업자를 정확히 겨냥합니다. 채널 핵심 타깃과 가장 잘 맞는 주제입니다.","outline":["복식부기의무자로 바뀝니다","사업용계좌 신고 의무","성실신고확인 대상이 가까워집니다","기장료가 오르는 이유","미리 준비하면 달라지는 것"],"verify":["업종별 복식부기의무자 기준금액","사업용계좌 신고 의무 및 기한","성실신고 기준금액","무기장 가산세"],"shorts":["매출 3억을 넘으면 달라지는 세 가지","사업용계좌 신고 안 하면 가산세","기장료가 오르는 이유"],"next":["성실신고 대비","법인전환 검토 시점"]},{"id":"S5-3","title":"장부를 안 쓰면 얼마나 손해인가","message":"경비율로 신고하면 편하지만, 넘는 순간 손해가 큽니다.","hook":"장부 안 쓰고 신고하면 편한데, 어느 순간부터 손해가 됩니다.","angle":"추계와 기장의 갈림길. 숫자로 비교하면 판단이 명확해집니다.","outline":["추계신고란 — 경비율로 계산","언제까지 유리한가","무기장 가산세","장부를 쓰면 가능해지는 것들 (감면·공제·이월결손금)","저라면 이 시점에 장부로 바꿉니다"],"verify":["단순경비율·기준경비율 적용 기준","무기장 가산세율","이월결손금 공제 요건"],"shorts":["장부 안 쓰면 붙는 가산세","경비율 신고가 유리한 구간은 여기까지","장부를 쓰면 받을 수 있는 것들"],"next":["복식부기 vs 간편장부","창업 감면 챙기기"]},{"id":"S5-4","title":"5월에 할 수 있는 게 별로 없는 이유","message":"세금은 5월이 아니라 작년 1년 동안 정해집니다.","hook":"5월에 세금 줄일 방법을 물으시면, 드릴 답이 많지 않습니다.","angle":"채널 전체를 관통하는 메시지를 최대 시즌에 배치합니다. 브랜딩과 시즌 유입이 만나는 지점입니다.","outline":["신고는 작년 12월 31일까지의 일을 정리하는 작업","5월에 아직 가능한 것 (공제 항목 챙기기, 감면 신청)","이미 늦은 것 (증빙 없는 지출, 시기 판단)","그래서 내년 준비는 지금부터"],"verify":["신고 시점에 적용 가능한 공제·감면 항목"],"shorts":["5월에 세금 줄이는 방법을 물으시면","지금도 챙길 수 있는 것 두 가지","내년 5월은 올해 정해집니다"],"next":["연말 절세 마감(S11)","세무사와 상의하는 타이밍"]}]},{"id":"S6","name":"성실신고·6월 신고","months":"5~6월","deadline":"6/30","publishAt":"5월 말","target":"성실신고 대상 · 복식부기의무자","size":"소","priority":7,"note":"대상이 좁은 대신 검색 경쟁이 거의 없습니다. 채널 초기에 상위 노출을 잡기 좋은 구간입니다.","topics":[{"id":"S6-1","title":"6월 30일까지 해야 할 세 가지","message":"5월에 끝난 게 아닙니다.","hook":"5월에 신고를 마치셨어도, 6월에 할 일이 남은 분들이 있습니다.","angle":"세 가지 마감이 같은 날인데 아는 사람이 적습니다. 정보 정리만으로 가치가 있습니다.","outline":["성실신고확인대상자 종합소득세","사업용계좌 신고","해외금융계좌 신고","각각 누가 대상인지","안 하면 붙는 가산세"],"verify":["성실신고 대상 기준 및 신고기한","사업용계좌 신고 의무자와 미신고 가산세","해외금융계좌 신고 기준금액과 처벌"],"shorts":["6월 30일 마감이 세 개입니다","사업용계좌 신고, 하셨나요","해외계좌 5억 넘으면 신고 대상입니다"],"next":["성실신고 대상이 되면 달라지는 것","법인전환 검토"]},{"id":"S6-2","title":"성실신고 대상이 되면 달라지는 것","message":"성실신고는 벌이 아니라 법인전환을 검토할 신호입니다.","hook":"성실신고 대상이 됐다는 건 사업이 그만큼 커졌다는 뜻입니다.","angle":"부정적으로 받아들이는 대표가 많습니다. 관점을 바꿔주면서 다음 판단으로 연결합니다.","outline":["업종별 기준금액","달라지는 것 — 기한, 확인 비용, 증빙 수준","사후 검증이 강해지는 이유","이 시점이 법인전환 검토 시점인 이유","대상이 되기 1년 전부터 준비합니다"],"verify":["업종별 성실신고 기준금액","성실신고확인비용 세액공제"],"shorts":["내 업종의 성실신고 기준 금액","성실신고 대상이 되면 달라지는 것","이때가 법인전환 검토 시점입니다"],"next":["법인전환 판단 기준","매출 3억 넘긴 해"]}]},{"id":"S7","name":"부가세 1기 확정","months":"6~7월","deadline":"7/25","publishAt":"6월 말","target":"개인·법인 전체","size":"중","priority":8,"note":"S1(1월)과 같은 구조입니다. 같은 대본을 연도·기수만 바꿔 재활용하세요.","topics":[{"id":"S7-1","title":"세금계산서 받았는데 왜 공제가 안 되나요","message":"부가세는 받은 서류의 종류와 지출의 성격이 결정합니다.","hook":"세금계산서를 받아도 돌려받지 못하는 지출이 있습니다.","angle":"부가세 시즌마다 반복되는 질문입니다. 유형별로 정리하면 매년 재활용됩니다.","outline":["매입세액 공제의 원리","자주 걸리는 불공제 유형","간이과세자에게 받은 영수증","대표 개인 명의 결제","지출 전에 확인할 한 가지"],"verify":["매입세액 불공제 유형","간이과세자 발행 증빙의 공제 가능 여부"],"shorts":["세금계산서 받아도 못 돌려받는 경우","대표 개인카드로 결제하면 생기는 일","지출 전에 이것만 확인하세요"],"next":["법인카드 관리","증빙 챙기는 습관"]}]},{"id":"S8","name":"법인세 중간예납","months":"8~9월","deadline":"8월 말~9월 초","publishAt":"8월 초","target":"법인","size":"소","priority":9,"note":"숏폼 위주. 롱폼은 한 편이면 충분합니다.","topics":[{"id":"S8-1","title":"8월에 법인세를 또 낸다고요","message":"작년 세금의 절반을 미리 내는 것입니다.","hook":"3월에 법인세를 냈는데 8월에 또 고지가 옵니다.","angle":"S10(종소세 중간예납)의 법인 버전. 같은 구조로 만들면 제작이 빠릅니다.","outline":["중간예납의 구조","직전 사업연도 기준 vs 가결산 기준 — 선택할 수 있습니다","올해 실적이 나쁘면 가결산으로","분납 가능 여부"],"verify":["법인세 중간예납 계산 방식 두 가지","가결산 신고 요건","납부기한 및 분납"],"shorts":["3월에 냈는데 8월에 또 내나요","실적이 나쁘면 가결산으로 줄일 수 있습니다"],"next":["법인세 신고 준비","세금 적립"]}]},{"id":"S2","name":"사업장현황·연말정산","months":"1~2월","deadline":"2/10","publishAt":"1월 중순","target":"면세사업자 · 직원 둔 사업자","size":"소","priority":10,"note":"대상이 좁지만 검색 경쟁이 거의 없습니다.","topics":[{"id":"S2-1","title":"면세사업자도 2월에 신고할 게 있습니다","message":"부가세를 안 내도 신고 의무는 있습니다.","hook":"면세사업자라 부가세 신고를 안 하시는데, 2월 10일 마감이 따로 있습니다.","angle":"학원·병의원·농수산물 등 면세사업자가 자주 놓칩니다. 경쟁이 없는 구간입니다.","outline":["사업장현황신고란","누가 대상인가","무엇을 신고하나","안 하면 — 가산세와 불이익","5월 종소세와의 관계"],"verify":["사업장현황신고 대상과 기한","미신고 가산세"],"shorts":["면세사업자도 2월에 신고합니다","사업장현황신고 안 하면 생기는 일"],"next":["면세사업자의 종소세","매입 증빙 관리"]},{"id":"S2-2","title":"직원 연말정산, 사업자가 해야 할 일","message":"직원 연말정산은 회사의 의무입니다.","hook":"직원분 연말정산, 회사가 뭘 해야 하는지 아시나요.","angle":"직원을 처음 둔 사업자가 당황하는 지점입니다. 절차 안내형.","outline":["회사가 하는 일과 직원이 하는 일","일정","지급명세서 제출","중도 퇴사자 처리","실수하면 생기는 일"],"verify":["연말정산 일정","지급명세서 제출 기한과 가산세","중도퇴사자 정산 방법"],"shorts":["직원 연말정산, 회사는 이것만 하면 됩니다","중도 퇴사자는 이렇게 처리합니다"],"next":["원천세 신고","직원 채용 시 의무"]}]},{"id":"S4","name":"부가세 1기 예정","months":"3~4월","deadline":"4/25","publishAt":"3월 말","target":"법인 중심","size":"소","priority":11,"note":"S9(2기 예정)와 동일 구조입니다. 같은 대본을 기수만 바꿔 재활용하세요.","topics":[{"id":"S4-1","title":"부가세 예정신고, 개인과 법인이 다릅니다","message":"개인은 고지받고, 법인은 신고합니다.","hook":"같은 부가세인데 개인사업자는 고지서가 오고 법인은 신고를 합니다.","angle":"S9-1과 같은 내용을 1기 기준으로. 촬영은 한 번에 두 기수 분량을 찍어두면 효율적입니다.","outline":["개인 — 예정고지","법인 — 예정신고","매출이 줄었을 때의 선택지","미납 시 가산세"],"verify":["예정신고·예정고지 대상","예정신고 전환 요건"],"shorts":["개인은 고지, 법인은 신고","매출 줄었으면 예정신고로 바꾸세요"],"next":["부가세 확정신고 준비","부가세 적립"]}]}],"evergreen":{"topics":[{"id":"EV-1","title":"개인사업자 법인전환, 언제 해야 할까","message":"법인전환의 기준은 매출이 아니라 번 돈을 회사에 남길 수 있느냐다.","hook":"매출이 커지면 법인으로 바꾸는 게 무조건 유리할까요?","angle":"세율표만 보면 답이 정해진 것처럼 보이지만, 법인 돈은 대표 돈이 아니라는 지점에서 결론이 뒤집힙니다.","outline":["법인전환을 떠올리는 순간 세 가지","세율만 보면 답이 나오는 것처럼 보이는 이유","법인 통장의 돈은 대표 돈이 아닙니다","이익 3억, 생활비가 다른 두 대표 비교","세금 말고 같이 봐야 할 것 다섯 가지"],"verify":["종합소득세·법인세 구간별 세율","급여·배당 인출 시 과세 구조","법인 대표이사 4대보험","성실신고 기준금액","법인전환 방식별 조세특례"],"shorts":["매출 5억이면 법인으로 바꿔야 할까요?","법인이 무조건 세금이 적다는 착각","제가 법인전환을 말리는 대표 유형"],"next":["성실신고 대상이 되기 전 판단","급여 vs 배당 배분"]},{"id":"EV-2","title":"법인카드, 어디까지 써도 될까","message":"문제는 금액이 아니라 패턴이다.","hook":"법인카드로 마트에서 장 보신 적 있으신가요?","angle":"한 번 5만원은 아무도 안 보지만 매주 토요일 5만원은 보입니다. 금액이 아니라 규칙성이 신호가 된다는 걸 보여줍니다.","outline":["법인카드 지출이 갈리는 세 갈래","실제로 지적받는 패턴 다섯 가지","대표 상여로 처분되면 세금이 세 번 늘어납니다","애매한 항목 정리","1년 뒤에 기억나지 않으면 소명이 안 됩니다"],"verify":["대표 상여 처분 시 과세 연쇄","기업업무추진비 한도와 증빙","복리후생비 인정 범위"],"shorts":["법인카드로 마트 장보기, 됩니까","주말에 긁은 법인카드가 위험한 이유","대표 상여로 처분되면 세금이 세 번"],"next":["매입세액 불공제 유형","증빙 관리 습관"]},{"id":"EV-3","title":"매출 10억인데 통장에 돈이 없는 이유","message":"이익과 현금은 다르다. 세금은 이익에 붙는다.","hook":"매출 10억인 대표님이 물으셨습니다. 이 돈을 어디서 내라는 거죠?","angle":"계산도 신고도 맞았는데 낼 돈이 없는 상황. 현금이 매출채권·재고·설비·대표인출로 빠진 경로를 따라갑니다.","outline":["매출은 세 배가 됐는데 체감은 더 빠듯","현금이 빠진 네 갈래","재고는 비용이 아닙니다","이후 바꾼 세 가지","같은 문제를 겪는 대표들의 공통점"],"verify":["감가상각 내용연수","중소기업 즉시상각 특례"],"shorts":["10억 벌었는데 통장이 비는 이유","재고는 비용이 아닙니다","매출 5억 넘으면 이 통장부터"],"next":["세금 적립 통장 만들기","채용 판단 기준"]},{"id":"EV-4","title":"가족에게 주는 급여, 이렇게 하면 부인당합니다","message":"가족 급여는 실제 근무와 증빙이 전부다.","hook":"배우자분께 월급 드리고 계신 대표님, 계신가요?","angle":"절세 방법으로 알려져 있지만 잘못하면 가산세로 끝납니다. '가족이 아니었어도 줬을까'라는 질문 하나로 판단 기준을 줍니다.","outline":["가족 급여가 절세가 되는 원리","인정받는 조건 네 가지","실제로 부인당하는 전형","건강보험 피부양자까지 봐야 하는 이유"],"verify":["종합소득세 구간별 세율","4대보험 요율","건강보험 피부양자 자격 기준"],"shorts":["배우자 월급, 이렇게 주면 전액 부인","적정 금액은 이 질문 하나로","세금은 줄었는데 보험료가 늘어납니다"],"next":["직원 채용 시 실제 부담","대표 급여 설계"]},{"id":"EV-5","title":"법인 대표 월급, 얼마로 잡는 게 맞을까","message":"대표 급여는 절세 계산이 아니라 생활비와 자금계획에서 출발한다.","hook":"법인 만들고 가장 많이 받는 질문입니다. 제 월급은 얼마로 할까요?","angle":"인터넷 계산기가 안 맞는 이유는 대표님 생활비를 모르기 때문입니다. 세율표가 아니라 생활비부터 보는 순서를 제시합니다.","outline":["급여를 낮게 잡으면 가지급금으로 돌아옵니다","높게 잡으면 소득세와 4대보험","제가 쓰는 판단 순서 네 단계","대출 계획이 있으면 순서가 바뀝니다","급여·배당·퇴직금은 하나의 구조"],"verify":["가지급금 인정이자율","근로소득세 누진 구조","대표이사 4대보험 요율과 상한"],"shorts":["대표 월급을 최저로 잡으면 생기는 일","대출 계획이 있으면 급여를 줄이면 안 됩니다","저는 이 순서로 정합니다"],"next":["가지급금 정리","급여 vs 배당"]},{"id":"EV-6","title":"법인차 비용처리, 어디까지 될까","message":"차를 뭘로 사느냐보다 보험과 운행기록부가 먼저다.","hook":"작년까지는 절반은 인정받으셨는데, 올해부터는 0원입니다.","angle":"업무전용보험 미가입 시 비용 전액 불인정으로 바뀐 것이 가장 큰 변화입니다. 차종 선택보다 이게 먼저입니다.","outline":["보험부터 — 여기서 막히면 나머지는 의미 없습니다","운행기록부 유무에 따른 한도","리스·렌트·구매 비교","고가 차량일수록 불리해지는 구조","개인사업자와 법인의 차이"],"verify":["업무전용자동차보험 의무 대상과 시행 시기","운행기록부 미작성 시 한도","감가상각비 연간 한도","리스·렌트 부가세 처리"],"shorts":["작년 50%, 올해 0원","차가 두 대면 전용보험이 필수","운행기록부 안 쓸 거면 차를 이렇게"],"next":["법인카드 관리","사업용 계좌 분리"]},{"id":"EV-7","title":"세무사만 바꾸면 세금이 줄어들까","message":"세금은 신고할 때가 아니라 1년 동안의 의사결정에서 결정된다.","hook":"세무사를 바꾸고 싶다고 오셨는데, 이유가 세금이 아니었습니다.","angle":"세무사가 세무사 고르는 법을 말하면 영업으로 들립니다. 그래서 사무실 언급 없이 기준만 주고, '바꿔도 소용없는 경우'로 한 번 뒤집습니다.","outline":["세무사를 바꿔도 세금이 그대로인 이유","그 1년 동안 무슨 일이 있었나","세무사무실 고르는 기준 세 가지","실제로 바꿔야 하는 신호 네 가지","반대로 바꿔도 소용없는 경우"],"verify":[],"shorts":["세무사를 바꾸려는 이유가 세금이 아니었습니다","고를 때 봐야 할 세 가지","바꿔도 소용없는 경우"],"next":["매출 10억 통장 0원","결정 전에 상의하는 습관"]},{"id":"EV-8","title":"온라인 셀러, 매출을 얼마로 신고할까","message":"온라인 판매는 무엇을 매출로 볼 것인가에서 세금이 갈린다.","hook":"스마트스토어 매출이 3억인데 신고 매출은 3천만원인 경우가 있습니다.","angle":"구매대행은 결제액이 아니라 마진이 매출입니다. 자릿수가 바뀌는 지점을 정확히 짚습니다.","outline":["업종코드부터 갈립니다","직접 판매 vs 구매대행","매출 인식 시점은 구매확정일","플랫폼 쿠폰과 할인","간이과세 vs 일반과세","가장 위험한 실수는 매출 누락"],"verify":["전자상거래·구매대행 업종코드","구매대행 매출 인식 기준","공급시기 판단","간이과세 기준금액"],"shorts":["매출 3억인데 신고는 3천만원","구매대행은 마진만 매출","국세청은 이미 알고 있습니다"],"next":["부가세 신고 전 확인사항","창업 세액감면"]},{"id":"EV-9","title":"직원 한 명 뽑을 때 실제로 나가는 돈","message":"채용 판단의 기준은 월급이 아니라 총부담액과 손익분기 매출이다.","hook":"직원 월급 300만원. 회사에서 나가는 돈은 얼마일까요?","angle":"총부담을 이익률로 나누면 이 사람이 벌어와야 할 매출이 나옵니다. 그 숫자를 보면 채용이 무리인지 바로 보입니다.","outline":["월급 300만원의 실제 부담 분해","인건비는 비용이라 세금은 줄어듭니다","채용하면 따라오는 의무 네 가지","손익분기 매출 계산법","3.3%로 대신하려다 생기는 문제"],"verify":["4대보험 사업자 부담분","퇴직급여·연차수당 기준","고용 관련 세액공제","근로계약서·지급명세서 가산세"],"shorts":["월급 300만원, 실제 부담액은","손익분기 매출 계산법","3.3%로 처리하면 안 되는 경우"],"next":["가족 급여","일용직 신고"]},{"id":"EV-10","title":"대표님 통장으로 빼 간 돈, 어떻게 되어 있나요","message":"가지급금은 시간이 지날수록 커지는 문제다. 발견 즉시 다뤄야 한다.","hook":"급하게 법인 통장에서 빼신 돈, 지금 어떻게 되어 있는지 아세요?","angle":"이자가 붙어 오히려 늘어나고, 정리 방법마다 또 다른 세금이 붙습니다. 작을 때 정리해야 하는 이유를 숫자로 보여줍니다.","outline":["장부에는 빌려준 돈으로 남습니다","3중 부담 — 인정이자·지급이자·상여 처분","세금 문제이기 전에 개인 채무","정리 방법 네 가지와 각각의 부작용","애초에 안 생기게 하려면"],"verify":["가지급금 인정이자율","지급이자 손금불산입","정리 방법별 과세 구조","특수관계자 시가 판단"],"shorts":["법인 통장에서 뺀 돈, 그냥 두면","이자를 안 받아도 받은 걸로 칩니다","정리 방법 네 가지 전부 부작용"],"next":["대표 급여 설계","결산 전 정리할 계정"]},{"id":"EV-11","title":"회원권 미리 받은 돈, 언제 매출이 될까","message":"받은 돈과 매출은 다르다. 서비스를 제공한 시점이 매출이다.","hook":"10회권 100만원을 오늘 결제받으셨습니다. 오늘 매출일까요?","angle":"미용·에스테틱·필라테스처럼 선결제가 많은 업종에서 세금을 미리 내는 일이 흔합니다. 표 하나로 해결되는 문제입니다.","outline":["선결제 매출의 원칙","부가세와 소득세가 다르게 움직입니다","현금·계좌이체 매출과 현금영수증","관리사 인건비 처리","놓치기 쉬운 경비","이 업종도 창업 감면 대상이 될 수 있습니다"],"verify":["부가세 공급시기와 선수금","소득세 손익귀속시기","현금영수증 의무발행 업종","근로자성 판단"],"shorts":["10회권 100만원, 오늘 매출 아닙니다","관리사 급여 3.3% 주의","피부관리실도 창업 감면 됩니다"],"next":["창업 세액감면","직원 채용 부담"]},{"id":"EV-12","title":"법인 돈, 급여로 가져갈까 배당으로 가져갈까","message":"급여와 배당은 선택이 아니라 배분의 문제다.","hook":"법인에 돈이 쌓였습니다. 급여로 가져갈까요, 배당으로 가져갈까요?","angle":"표로 비교하면 답이 나올 것 같지만 퇴직금·대출·건강보험·지분이 같이 움직여서 안 나옵니다. 케이스 세 개로 결론이 갈리는 걸 보여줍니다.","outline":["급여의 성격","배당의 성격과 이중과세","둘만 비교하면 답이 안 나오는 이유","케이스 세 개 — 대출·재투자·은퇴","그래서 비율의 문제입니다"],"verify":["근로소득세 구간","배당소득 원천징수와 종합과세 기준","배당세액공제","임원 퇴직금 한도"],"shorts":["표로는 답이 안 나옵니다","대출 계획이 있으면 급여를","배당에도 세금이 두 번"],"next":["대표 급여 설계","퇴직금 설계"]},{"id":"EV-13","title":"5년간 세금 감면, 놓치거나 토해내거나","message":"감면은 자동으로 적용되지 않고, 세법의 '창업'은 생각과 다르다.","hook":"감면 대상이었는데 4년간 한 번도 못 받으신 대표님이 계셨습니다.","angle":"못 받은 경우와 받았다가 부인당한 경우를 대비시킵니다. 사업자등록 신설이 창업이 아니라는 게 핵심입니다.","outline":["두 대표님 — 못 받은 분과 토해낸 분","감면 요건 세 가지","세법의 창업은 사업자등록이 아닙니다","세무사가 사업 내용을 알아야 잡히는 항목","경정청구로 되찾기","자주 놓치는 다른 감면들"],"verify":["창업중소기업 감면 대상 업종·지역·연령","조특법상 창업 배제 사유","경정청구 기한","추계신고 시 감면 적용"],"shorts":["사업자등록 새로 냈다고 창업이 아닙니다","지나간 세금도 돌려받습니다","받았다가 토해내는 경우"],"next":["종소세 신고 준비","고용 관련 공제"]},{"id":"EV-14","title":"이런 사업자가 세무조사를 받습니다","message":"조사는 운이 아니라 데이터의 불일치에서 시작된다.","hook":"세무조사 얘기만 나오면 불안해하시는 대표님이 많습니다.","angle":"공포 마케팅으로 흐르기 가장 쉬운 주제라 정반대로 갑니다. 겁주지 않고 관리 항목만 알려줍니다. 썸네일도 역발상.","outline":["정기와 비정기의 구분","시스템이 보는 신호 네 가지","규모가 커지면 들어가는 관심 구간","조사가 나왔을 때 필요한 것","평소에 하면 되는 관리 네 가지"],"verify":["정기조사 선정 기준","소득-재산 대조 분석 체계","규모별 관리 구분"],"shorts":["세무조사는 무작위로 나오지 않습니다","국세청이 보는 신호 네 가지","겁먹기보다 이걸 관리하세요"],"next":["증빙 관리","사업용 계좌 분리"]},{"id":"EV-15","title":"세무사의 5월","message":"신고는 5월에 하지만 결과는 작년에 이미 정해져 있다.","hook":"5월에 세무사무실에 전화하시면 통화가 잘 안 됩니다.","angle":"브랜딩 편. 브이로그가 아니라 상담에서 느끼는 것이 중심입니다. 채널 전체를 관통하는 메시지를 사람 이야기로 전합니다.","outline":["5월의 사무실","가장 많이 받는 질문 세 가지","왜 늦은 질문인가","그래서 자주 드는 생각","결정하기 전에 물어봐 주세요"],"verify":[],"shorts":["5월에 제일 많이 듣는 질문","그때 물어보셨으면 달랐을 텐데"],"next":["연말 절세 마감","세무사와 상의하는 타이밍"]}]}};
+
+/* ── 상태 ───────────────── */
+/* 정적 배포(GitHub Pages)에서는 빌드 스크립트가 이 값을 실제 데이터로 바꾼다.
+   그 경우 window.claude 가 없으므로 저장·생성 없이 읽기 전용으로 돈다. */
+const SNAPSHOT = null; /*__SNAPSHOT__*/
+
+let DB = null, SAMPLE = null;
+const saved = new Map();      // topicId -> {script, guide}
+const custom = new Map();     // topicId -> 사용자가 직접 추가한 주제
+const series = new Map();     // seriesId -> {id, name, title, desc, order}
+let guideText = "";
+let curSeason = null;
+let viewMode = "season";      // season | series
+let curSeries = null;
+let editingSeries = null;     // 편집 중인 시리즈 id, "new" 면 새로 만들기
+const openTopics = new Set();
+const sheet = {id:null, editing:false, aborter:null};
+let addOpen = false;
+
+/* 상시 주제도 시즌과 똑같이 다룬다 — 대본 생성이 되게 하려면 같은 구조여야 한다 */
+const EV_SEASON = {
+  id: "EV", name: "상시 주제", months: "연중", deadline: "—", publishAt: "시즌 사이",
+  target: "전체", size: "중", priority: 99,
+  note: "시즌과 무관하게 꾸준히 검색되는 주제입니다. 시즌 사이 빈 주를 메웁니다. 전체의 40%를 여기서 채웁니다.",
+  topics: DATA.evergreen.topics
+};
+const SEASONS = DATA.seasons.concat([EV_SEASON]);
+
+function topicsOf(sid){
+  const s = SEASONS.find(x => x.id === sid);
+  const base = s ? s.topics : [];
+  const mine = [...custom.values()].filter(c => c.seasonId === sid);
+  return base.concat(mine);
+}
+function findTopic(id){
+  if (custom.has(id)){
+    const c = custom.get(id);
+    return Object.assign({}, c, {season: SEASONS.find(s => s.id === c.seasonId) || EV_SEASON});
+  }
+  for (const s of SEASONS){
+    const t = s.topics.find(x => x.id === id);
+    if (t) return Object.assign({}, t, {season: s});
+  }
+  return null;
+}
+
+/* ── 유틸 ───────────────── */
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const byId = id => document.getElementById(id);
+function flash(){ const e=byId("flash"); e.classList.add("show"); clearTimeout(flash._t);
+  flash._t=setTimeout(()=>e.classList.remove("show"),1400); }
+/* 아티팩트는 sandbox 안에서 돌아 window.confirm 이 막힌다.
+   그래서 "한 번 더 누르면 실행" 방식으로 확인을 받는다. */
+const pendingConfirm = new Map();
+function askAgain(btn, key, label){
+  if (pendingConfirm.has(key)){
+    clearTimeout(pendingConfirm.get(key).timer);
+    pendingConfirm.delete(key);
+    return true;
+  }
+  const orig = btn.textContent;
+  btn.textContent = label;
+  btn.classList.add("warnbtn");
+  const timer = setTimeout(() => {
+    pendingConfirm.delete(key);
+    btn.textContent = orig;
+    btn.classList.remove("warnbtn");
+  }, 5000);
+  pendingConfirm.set(key, {timer, btn, orig});
+  return false;
+}
+function clearAsk(key){
+  const p = pendingConfirm.get(key);
+  if (!p) return;
+  clearTimeout(p.timer);
+  p.btn.textContent = p.orig;
+  p.btn.classList.remove("warnbtn");
+  pendingConfirm.delete(key);
+}
+
+function rec(id){ return saved.get(id) || {}; }
+function hasScript(id){ return !!(rec(id).script); }
+function statusOf(id){ return rec(id).status || ""; }   // "" | reviewed | shot
+function seriesOf(id){ const sid = rec(id).seriesId; return sid ? series.get(sid) : null; }
+function sortedSeries(){ return [...series.values()].sort((a,b)=>(a.order||0)-(b.order||0)); }
+
+const WD = ["일","월","화","수","목","금","토"];
+function fmtDay(iso){
+  const d = new Date(iso + "T00:00:00");
+  if (isNaN(d)) return iso;
+  return {label: iso, wd: WD[d.getDay()], d};
+}
+function relDays(iso){
+  const t = new Date(iso + "T00:00:00");
+  if (isNaN(t)) return "";
+  const now = new Date(); now.setHours(0,0,0,0);
+  const n = Math.round((t - now) / 86400000);
+  return n === 0 ? "오늘" : n > 0 ? `D-${n}` : `${-n}일 지남`;
+}
+/* 모든 주제를 한 줄로 훑는다 */
+function eachTopic(fn){
+  SEASONS.forEach(sn => topicsOf(sn.id).forEach(t => fn(t, sn)));
+}
+
+/* 대본에 아직 남아 있는 확인 표시를 센다 */
+function markersLeft(text){
+  const t = String(text || "");
+  return {
+    num: (t.match(/\[수치검증/g) || []).length,
+    judge: (t.match(/\[촬영 전 확인/g) || []).length
+  };
+}
+function leftLabel(m){
+  const p = [];
+  if (m.num) p.push(`수치검증 ${m.num}`);
+  if (m.judge) p.push(`확인 ${m.judge}`);
+  return p.join(" · ");
+}
+
+/* ── 지금 할 일 ───────────────── */
+const MONTH_OF = {"12월 말":12,"1월 중순":1,"2월 중순":2,"3월 말":3,"4월 초~중순":4,
+  "5월 말":5,"6월 말":6,"8월 초":8,"9월 말":9,"11월 초":11,"11월 중순":11};
+
+function renderNow(){
+  const m = new Date().getMonth() + 1;
+  const scored = DATA.seasons.map(s => {
+    const pm = MONTH_OF[s.publishAt] || 1;
+    let d = pm - m; if (d < -1) d += 12;          // 지난 달까지는 유효, 그 전은 내년 것
+    return {s, d};
+  }).filter(x => x.d >= -1 && x.d <= 3).sort((a,b) => a.d - b.d || a.s.priority - b.s.priority);
+
+  const top = scored.slice(0, 3);
+  byId("nowBox").innerHTML = `
+    <h3><span class="badge">${m}월</span> 지금 준비할 시즌</h3>
+    <p>발행일은 마감이 아니라 그 3~4주 전입니다. 아래 순서로 준비하시면 됩니다.</p>
+    <div class="row">${
+      top.map(({s,d}) => `<button class="btn ${d<=0?"primary":""}" data-goseason="${s.id}">${
+        esc(s.name)} · ${esc(s.publishAt)} 발행${d<=0?" (지금)":""}</button>`).join("")
+    }</div>`;
+}
+
+/* ── 시즌 목록 ───────────────── */
+function renderSeasons(){
+  const m = new Date().getMonth() + 1;
+  byId("seasonList").innerHTML = DATA.seasons
+    .slice().sort((a,b) => (MONTH_OF[a.publishAt]||1) - (MONTH_OF[b.publishAt]||1))
+    .map(s => {
+      const pm = MONTH_OF[s.publishAt] || 1;
+      const hot = pm === m || pm === m + 1;
+      const done = s.topics.filter(t => hasScript(t.id)).length;
+      return `<button class="season${hot?" hot":""}" data-goseason="${s.id}">
+        <span class="sid">${s.id}</span>
+        <span>
+          <span class="sname">${esc(s.name)}</span>
+          <span class="smeta">마감 ${esc(s.deadline)} · ${esc(s.target)} · 주제 ${s.topics.length}개</span>
+        </span>
+        <span class="sright">
+          ${s.size === "특대" || s.size === "대" ? '<span class="tag big">큰 시즌</span>' : ""}
+          ${done ? `<span class="tag done">대본 ${done}</span>` : ""}
+          <span class="tag${hot?" hot":""}">${esc(s.publishAt)} 발행</span>
+        </span>
+      </button>`;
+    }).join("")
+    + (() => {
+        const n = topicsOf("EV").length;
+        const done = topicsOf("EV").filter(t => hasScript(t.id)).length;
+        return `<button class="season" data-goseason="EV">
+          <span class="sid">상시</span>
+          <span>
+            <span class="sname">상시 주제</span>
+            <span class="smeta">시즌 무관 · 시즌 사이를 메웁니다 · 주제 ${n}개</span>
+          </span>
+          <span class="sright">
+            ${done ? `<span class="tag done">대본 ${done}</span>` : ""}
+            <span class="tag">전체의 40%</span>
+          </span>
+        </button>`;
+      })();
+}
+
+/* ── 시즌 칩 ───────────────── */
+function topicsInSeries(sid){
+  const out = [];
+  eachTopic((t, sn) => {
+    const r = rec(t.id);
+    if (sid === "__none" ? !r.seriesId : r.seriesId === sid) out.push({t, sn});
+  });
+  return out;
+}
+
+function renderChips(){
+  const host = byId("seasonChips");
+  document.querySelectorAll(".vbtn").forEach(b =>
+    b.setAttribute("aria-pressed", String(b.dataset.view === viewMode)));
+
+  if (viewMode === "series"){
+    const list = sortedSeries();
+    if (!list.length){
+      host.innerHTML = `<span class="hint" style="font-size:13px;color:var(--muted)">
+        아직 시리즈가 없습니다 — <b>시리즈</b> 탭에서 먼저 만들어 주세요.</span>`;
+      return;
+    }
+    host.innerHTML = list.map(x => `<button class="chip" data-series="${x.id}"
+        aria-pressed="${curSeries===x.id}">${esc(x.name)} ${topicsInSeries(x.id).length}</button>`).join("")
+      + `<button class="chip" data-series="__none" aria-pressed="${curSeries==="__none"}">
+          시리즈 없음 ${topicsInSeries("__none").length}</button>`;
+    return;
+  }
+  host.innerHTML = SEASONS.map(s => {
+    const n = topicsOf(s.id).length;
+    return `<button class="chip" data-season="${s.id}" aria-pressed="${curSeason===s.id}">${
+      s.id === "EV" ? "" : s.id + " "}${esc(s.name)} ${n}</button>`;
+  }).join("");
+}
+
+/* ── 주제 목록 ───────────────── */
+function topicCard(t, isMine, showSeason){
+  const open = openTopics.has(t.id);
+  const has = hasScript(t.id);
+  const r = rec(t.id);
+  const ser = seriesOf(t.id);
+  const list = a => (a && a.length) ? `<ul>${a.map(o=>`<li>${esc(o)}</li>`).join("")}</ul>` : "";
+  const olist = a => (a && a.length) ? `<ol>${a.map(o=>`<li>${esc(o)}</li>`).join("")}</ol>` : "";
+  const blank = '<p style="color:var(--muted);font-size:13px">비어 있습니다 — 대본을 만들 때 채워집니다.</p>';
+  return `<div class="topic${isMine?" custom":""}">
+    <div class="topic-head">
+      <div>
+        ${showSeason ? `<p style="margin:0 0 3px"><span class="tag">${
+          showSeason.id === "EV" ? "상시" : showSeason.id + " " + esc(showSeason.name)}</span></p>` : ""}
+        <p class="topic-title">${esc(t.title)}</p>
+        ${t.message ? `<p class="topic-msg">${esc(t.message)}</p>` : ""}
+        ${t.hook ? `<p class="topic-hook">"${esc(t.hook)}"</p>` : ""}
+        ${(isMine || statusOf(t.id) || ser || r.uploadAt) ? `<p style="margin:6px 0 0">${
+          isMine ? '<span class="tag mine">직접 추가</span> ' : ""}${
+          ser ? `<span class="tag ser">${esc(ser.name)}</span> ` : ""}${
+          r.uploadAt ? `<span class="tag">${esc(r.uploadAt)} 업로드</span> ` : ""}${
+          statusOf(t.id) === "reviewed" ? '<span class="tag rev">검토 완료</span>' :
+          statusOf(t.id) === "shot" ? '<span class="tag shot">촬영 완료</span>' : ""}</p>` : ""}
+      </div>
+      <div class="topic-acts">
+        <button class="btn primary" data-script="${t.id}"${
+          (!has && SNAPSHOT) ? " disabled" : ""}>${
+          has ? "대본 보기" : (SNAPSHOT ? "대본 없음" : "대본 만들기")}</button>
+        <button class="btn sm" data-toggle="${t.id}" aria-expanded="${open}">${open?"접기":"파생 보기"}</button>
+        ${isMine ? `<button class="btn sm danger" data-del="${t.id}">삭제</button>` : ""}
+      </div>
+    </div>
+    <div class="topic-body" data-body="${t.id}"${open?"":" hidden"}>
+      <div>
+        <div class="blk"><h4>각도</h4>${t.angle ? `<p>${esc(t.angle)}</p>` : blank}</div>
+        <div class="blk"><h4>롱폼 본론</h4>${olist(t.outline) || blank}</div>
+        <div class="blk"><h4>숏폼 파생${t.shorts&&t.shorts.length?" "+t.shorts.length+"편":""}</h4>${
+          list(t.shorts) || blank}</div>
+      </div>
+      <div>
+        <div class="blk"><h4>촬영 전 확인 필요</h4>${
+          (t.verify&&t.verify.length) ? `<ul class="verify">${t.verify.map(o=>`<li>${esc(o)}</li>`).join("")}</ul>`
+          : '<p style="color:var(--muted);font-size:13px">이 편은 세법 수치를 다루지 않습니다.</p>'}</div>
+        <div class="blk"><h4>여기서 이어지는 주제</h4>${
+          (t.next&&t.next.length) ? `<ul class="next">${t.next.map(o=>`<li>${esc(o)}</li>`).join("")}</ul>` : blank}</div>
+      </div>
+      <div class="tset">
+        <span class="f">
+          <label for="sel-${t.id}">시리즈</label>
+          <select id="sel-${t.id}" data-setser="${t.id}"${DB?"":" disabled"}>
+            <option value="">— 없음 —</option>
+            ${sortedSeries().map(x => `<option value="${x.id}"${
+              r.seriesId === x.id ? " selected" : ""}>${esc(x.name)}</option>`).join("")}
+          </select>
+        </span>
+        <span class="f">
+          <label for="sh-${t.id}">촬영일</label>
+          <input type="date" id="sh-${t.id}" value="${esc(r.shootAt||"")}"
+                 data-setshoot="${t.id}"${DB?"":" disabled"}>
+        </span>
+        <span class="f">
+          <label for="up-${t.id}">업로드일</label>
+          <input type="date" id="up-${t.id}" value="${esc(r.uploadAt||"")}"
+                 data-setupload="${t.id}"${DB?"":" disabled"}>
+        </span>
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderTopics(){
+  const host = byId("topicList");
+
+  if (viewMode === "series"){
+    if (!series.size){ host.innerHTML = `<div class="rvempty">
+      <b>시리즈</b> 탭에서 시리즈를 먼저 만들어 주세요.<br>
+      예) 최초창업 시리즈 — 화면 제목 "사장님, 사업 처음이시죠?"</div>`; return; }
+    if (!curSeries) curSeries = sortedSeries()[0].id;
+    const meta = series.get(curSeries);
+    const rows = topicsInSeries(curSeries);
+    host.innerHTML = (meta ? `<div class="note teal">
+        <b>${esc(meta.title || meta.name)}</b>${meta.title ? ` · 관리명 ${esc(meta.name)}` : ""}
+        ${meta.desc ? "<br>" + esc(meta.desc) : ""}</div>`
+      : `<div class="note">아직 시리즈를 지정하지 않은 주제입니다. 주제를 펼쳐 시리즈를 골라주세요.</div>`)
+      + (rows.length
+        ? rows.map(({t, sn}) => topicCard(t, custom.has(t.id), sn)).join("")
+        : `<div class="rvempty">이 시리즈에 담긴 주제가 없습니다.<br>
+            주제를 펼쳐서 <b>시리즈</b>를 이 시리즈로 지정하면 여기에 모입니다.</div>`);
+    return;
+  }
+
+  const s = SEASONS.find(x => x.id === curSeason);
+  if (!s){ host.innerHTML = ""; return; }
+
+  const mineIds = new Set([...custom.values()].filter(c => c.seasonId === s.id).map(c => c.id));
+  const head = s.id === "EV"
+    ? `<div class="note">${esc(s.note)}</div>`
+    : `<div class="note${s.size==="특대"||s.size==="대"?" teal":""}">
+         <b>${esc(s.name)}</b> · 마감 ${esc(s.deadline)} · <b>${esc(s.publishAt)} 발행</b><br>${esc(s.note)}</div>`;
+
+  host.innerHTML = head
+    + topicsOf(s.id).map(t => topicCard(t, mineIds.has(t.id))).join("")
+    + `<div class="addbox${addOpen?" open":""}">
+         <div class="head">
+           <h4>주제 추가</h4>
+           <button class="btn${addOpen?"":" primary"}" id="addToggle">${addOpen?"닫기":"+ 새 주제"}</button>
+         </div>
+         <div class="form"${addOpen?"":" hidden"}>
+           <p class="hint">제목만 넣으셔도 됩니다. 나머지를 비워두면 대본을 만들 때 알아서 채웁니다.</p>
+           <div><label for="ntTitle">제목 (필수)</label>
+             <input id="ntTitle" placeholder="예) 프리랜서에서 사업자로 전환할 때"></div>
+           <div><label for="ntMsg">핵심 메시지 한 줄</label>
+             <input id="ntMsg" placeholder="이 영상에서 딱 하나만 기억한다면"></div>
+           <div><label for="ntHook">후킹 문장</label>
+             <input id="ntHook" placeholder="첫 3초에 던질 질문이나 단정"></div>
+           <div><label for="ntAngle">어떤 각도로 다룰지</label>
+             <textarea id="ntAngle" placeholder="상담에서 자주 듣는 질문, 오해하는 지점, 강조하고 싶은 판단 등"></textarea></div>
+           <div class="acts">
+             <button class="btn primary" id="addSave">${esc(s.name)}에 추가</button>
+             <span class="hint" id="addMsg"></span>
+           </div>
+         </div>
+       </div>`;
+}
+
+/* ── 발행 일정 ───────────────── */
+function schedRow({t, sn}, kind){
+  const r = rec(t.id);
+  const m = markersLeft(r.script);
+  const left = leftLabel(m);
+  const ser = seriesOf(t.id);
+  return `<div class="rvrow">
+    <span class="sid">${sn.id === "EV" ? "상시" : sn.id}</span>
+    <span>
+      <span class="rtitle">${esc(t.title)}</span>
+      <span class="rmeta">${ser ? esc(ser.name) + " · " : ""}${esc(sn.name)}${
+        r.shootAt && kind !== "shoot" ? " · 촬영 " + esc(r.shootAt) : ""}${
+        r.uploadAt && kind !== "upload" ? " · 업로드 " + esc(r.uploadAt) : ""}</span>
+    </span>
+    <span class="racts">
+      ${left ? `<span class="tag left">${left} 남음</span>` : ""}
+      <button class="btn sm" data-script="${t.id}">대본 보기</button>
+      ${statusOf(t.id) === "shot"
+        ? `<button class="btn sm" data-unshot="${t.id}">되돌리기</button>`
+        : `<button class="btn sm primary" data-shot="${t.id}">촬영 완료</button>`}
+    </span>
+  </div>`;
+}
+
+function dayGroups(rows, field){
+  const map = new Map();
+  rows.forEach(x => {
+    const d = rec(x.t.id)[field];
+    if (!d) return;
+    if (!map.has(d)) map.set(d, []);
+    map.get(d).push(x);
+  });
+  return [...map.entries()].sort((a,b) => a[0].localeCompare(b[0]));
+}
+
+function dayBlock(iso, rows, kind){
+  const f = fmtDay(iso);
+  const rel = relDays(iso);
+  const past = /지남/.test(rel);
+  return `<div class="daygroup">
+    <div class="dayhead">
+      <span class="d">${esc(iso)}</span>
+      <span class="w">(${f.wd ? f.wd : ""})</span>
+      <span class="rel${past?" past":""}">${esc(rel)}</span>
+    </div>
+    <div class="rvlist">${rows.map(x => schedRow(x, kind)).join("")}</div>
+  </div>`;
+}
+
+function renderSchedule(){
+  const all = [];
+  eachTopic((t, sn) => { if (hasScript(t.id)) all.push({t, sn}); });
+
+  const live = all.filter(x => statusOf(x.t.id) !== "shot");
+  const upload = live.filter(x => rec(x.t.id).uploadAt);
+  const shoot = live.filter(x => rec(x.t.id).shootAt && !rec(x.t.id).uploadAt);
+  const wait = live.filter(x => statusOf(x.t.id) === "reviewed"
+                             && !rec(x.t.id).shootAt && !rec(x.t.id).uploadAt);
+  const done = all.filter(x => statusOf(x.t.id) === "shot");
+
+  const sec = (title, count, desc, inner) => `<div class="rvgroup">
+    <h3>${title} <span class="tag rev">${count}</span></h3>
+    <p>${desc}</p>${inner}</div>`;
+
+  byId("schedBody").innerHTML =
+    sec("업로드 예정", upload.length,
+        "업로드 날짜별로 그날 나갈 영상입니다. 주제를 펼쳐서 업로드일을 넣으면 여기에 잡힙니다.",
+        upload.length ? dayGroups(upload, "uploadAt").map(([d, r]) => dayBlock(d, r, "upload")).join("")
+          : `<div class="rvempty">업로드일이 잡힌 영상이 없습니다.<br>
+               <b>주제 · 파생</b> 탭에서 주제를 펼치면 촬영일과 업로드일을 넣을 수 있습니다.</div>`)
+    + sec("촬영 예정", shoot.length,
+        "촬영일만 잡혀 있고 업로드일은 아직 정하지 않은 영상입니다.",
+        shoot.length ? dayGroups(shoot, "shootAt").map(([d, r]) => dayBlock(d, r, "shoot")).join("")
+          : `<div class="rvempty">촬영일이 잡힌 영상이 없습니다.</div>`)
+    + sec("촬영 대기", wait.length,
+        "검토를 마쳤지만 아직 날짜를 잡지 않은 대본입니다. 바로 찍을 수 있습니다.",
+        wait.length ? `<div class="rvlist">${wait.map(x => schedRow(x, "wait")).join("")}</div>`
+          : `<div class="rvempty">검토를 마친 대본이 없습니다.<br>
+               대본을 열어 <b>[수치검증]</b>과 <b>[촬영 전 확인]</b>을 채우신 뒤
+               <b>검토 완료</b>를 누르면 여기로 옵니다.</div>`)
+    + (done.length ? `<div class="rvgroup shotlist">
+        <h3>촬영 완료 <span class="tag shot">${done.length}</span></h3>
+        <p>촬영을 마친 영상입니다.</p>
+        <div class="rvlist">${done.map(x => schedRow(x, "done")).join("")}</div></div>` : "");
+}
+
+/* ── 시리즈 ───────────────── */
+function serForm(x){
+  const v = x || {name:"", title:"", desc:""};
+  return `<div class="serform">
+    <div><label for="serName">관리용 이름</label>
+      <input id="serName" value="${esc(v.name||"")}" placeholder="예) 최초창업 시리즈"></div>
+    <div><label for="serTitle">화면에 나갈 제목</label>
+      <input id="serTitle" value="${esc(v.title||"")}" placeholder="예) 사장님, 사업 처음이시죠?"></div>
+    <div><label for="serDesc">어떤 시리즈인지</label>
+      <textarea id="serDesc" placeholder="누구를 위한, 어디서 어디까지 이어지는 시리즈인지">${esc(v.desc||"")}</textarea></div>
+    <div class="acts" style="display:flex;gap:8px;align-items:center">
+      <button class="btn primary" id="serSave">${x ? "저장" : "만들기"}</button>
+      <button class="btn" id="serCancel">취소</button>
+      <span class="hint" id="serMsg" style="font-size:12px;color:var(--muted)"></span>
+    </div>
+  </div>`;
+}
+
+function renderSeries(){
+  const list = sortedSeries();
+  const host = byId("seriesBody");
+
+  const cards = list.map(x => {
+    const rows = topicsInSeries(x.id);
+    const isEd = editingSeries === x.id;
+    return `<div class="sercard${isEd?" editing":""}">
+      <div class="serhead">
+        <div>
+          <p class="stitle">${esc(x.title || x.name)}</p>
+          <p class="sname">${esc(x.name)}${x.title ? "" : "  (화면 제목 미설정)"}</p>
+          ${x.desc ? `<p class="sdesc">${esc(x.desc)}</p>` : ""}
+        </div>
+        <div class="topic-acts">
+          <button class="btn sm" data-seredit="${x.id}">${isEd ? "편집 닫기" : "고치기"}</button>
+          <button class="btn sm" data-serview="${x.id}">주제 보기</button>
+          <button class="btn sm danger" data-serdel="${x.id}">삭제</button>
+        </div>
+      </div>
+      ${isEd ? serForm(x) : ""}
+      <div class="serbody">
+        <h4 style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.08em;
+          text-transform:uppercase;color:var(--muted);margin:0 0 8px">담긴 주제 ${rows.length}</h4>
+        ${rows.length ? `<div class="serlist">${rows.map(({t, sn}) => `<div class="seritem">
+            <span>${esc(t.title)}</span>
+            <span style="display:flex;gap:6px;align-items:center;flex:none">
+              ${rec(t.id).uploadAt ? `<span class="tag">${esc(rec(t.id).uploadAt)}</span>` : ""}
+              ${hasScript(t.id) ? `<button class="btn sm" data-script="${t.id}">대본</button>`
+                : `<span class="tag">대본 없음</span>`}
+            </span></div>`).join("")}</div>`
+          : `<p style="margin:0;font-size:13px;color:var(--muted)">
+              아직 없습니다. <b>주제 · 파생</b> 탭에서 주제를 펼쳐 이 시리즈를 고르면 담깁니다.</p>`}
+      </div>
+    </div>`;
+  }).join("");
+
+  host.innerHTML = cards
+    + (editingSeries === "new"
+        ? `<div class="sercard editing">${serForm(null)}</div>`
+        : `<button class="btn primary" id="serNew"${DB?"":" disabled"}>+ 새 시리즈</button>`)
+    + (list.length ? "" : `<div class="rvempty" style="margin-top:14px">
+        아직 시리즈가 없습니다. 사업자 생애주기, 상속·증여처럼 이어서 볼 묶음을 만들어 보세요.</div>`);
+}
+
+async function setStatus(id, status){
+  const r = rec(id);
+  saved.set(id, Object.assign({}, r, {
+    id, status, statusAt: status ? new Date().toISOString() : ""
+  }));
+  renderTopics(); renderSchedule(); renderSeasons(); renderSeries();
+  await persist(id);
+}
+
+/* ── 마크다운 ───────────────── */
+function markerSpan(e){
+  const m = e.match(/^\[([^\]]+)\]\s*([\s\S]*)$/);
+  if (!m) return `<code>${e}</code>`;
+  const k = m[1];
+  const cls = /^자막/.test(k) ? "sub" : /^수치검증|^촬영 전 확인/.test(k) ? "chk" : "gfx";
+  return `<span class="mk ${cls}">${k}</span>${m[2]}`;
+}
+function inline(s){
+  return esc(s).replace(/`([^`]+)`/g, (_,c) => markerSpan(c))
+               .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+}
+function headTxt(s){
+  const t = s.match(/^\[(\d{1,2}:\d{2})\]\s*([\s\S]*)$/);
+  return t ? `<span class="mk tc">${t[1]}</span>${inline(t[2])}` : inline(s);
+}
+function row(l){ return l.trim().replace(/^\|/,"").replace(/\|$/,"").split("|").map(c=>c.trim()); }
+
+function mdToHtml(src){
+  const L = String(src||"").replace(/\r\n/g,"\n").split("\n");
+  const out = []; let i = 0;
+  while (i < L.length){
+    const l = L[i];
+    if (!l.trim()){ i++; continue; }
+    if (/^\s*(---+|===+)\s*$/.test(l)){ out.push("<hr>"); i++; continue; }
+    const h = l.match(/^(#{1,4})\s+(.*)$/);
+    if (h){ const v = Math.min(h[1].length,4); out.push(`<h${v}>${headTxt(h[2])}</h${v}>`); i++; continue; }
+    if (/^\s*\|/.test(l) && i+1 < L.length && /^\s*\|[\s:|-]+\|?\s*$/.test(L[i+1])){
+      const head = row(l); i += 2; const rs = [];
+      while (i < L.length && /^\s*\|/.test(L[i])){ rs.push(row(L[i])); i++; }
+      out.push(`<div class="tblwrap"><table><thead><tr>${head.map(c=>`<th>${inline(c)}</th>`).join("")
+        }</tr></thead><tbody>${rs.map(r=>`<tr>${r.map(c=>`<td>${inline(c)}</td>`).join("")}</tr>`).join("")
+        }</tbody></table></div>`);
+      continue;
+    }
+    if (/^\s*>\s?/.test(l)){
+      const b = [];
+      while (i < L.length && /^\s*>\s?/.test(L[i])){ b.push(L[i].replace(/^\s*>\s?/,"")); i++; }
+      out.push(`<blockquote>${b.filter(Boolean).map(x=>`<p>${inline(x)}</p>`).join("")}</blockquote>`);
+      continue;
+    }
+    if (/^\s*[-*]\s+/.test(l) || /^\s*\d+\.\s+/.test(l)){
+      const ord = /^\s*\d+\.\s+/.test(l); const it = [];
+      while (i < L.length && (/^\s*[-*]\s+/.test(L[i]) || /^\s*\d+\.\s+/.test(L[i]))){
+        it.push(L[i].replace(/^\s*(?:[-*]|\d+\.)\s+/,"")); i++;
+      }
+      const tg = ord ? "ol" : "ul";
+      out.push(`<${tg}>${it.map(x=>`<li>${inline(x)}</li>`).join("")}</${tg}>`);
+      continue;
+    }
+    const b = [];
+    while (i < L.length && L[i].trim()
+           && !/^(#{1,4}\s|\s*[-*]\s|\s*\d+\.\s|\s*>|\s*\|)/.test(L[i])
+           && !/^\s*(---+|===+)\s*$/.test(L[i])){ b.push(L[i]); i++; }
+    out.push(`<p>${inline(b.join("\n")).replace(/\n/g,"<br>")}</p>`);
+  }
+  return out.join("\n");
+}
+
+/* ── 대본 생성 ───────────────── */
+function buildPrompt(t){
+  const tg = (rec(t.id).guide || "").trim();
+  const has = a => Array.isArray(a) && a.length > 0;
+  const seasonLine = t.season.id === "EV"
+    ? "성격: 시즌과 무관한 상시 주제입니다. 특정 신고 기한에 묶이지 않게 쓰고, 언제 봐도 유효하게 만듭니다."
+    : `시즌: ${t.season.name} (마감 ${t.season.deadline}, ${t.season.publishAt} 발행, 대상 ${t.season.target})`;
+  return [
+    "당신은 세무 전문 유튜브 채널의 대본 작가입니다. 아래 채널 규칙을 그대로 지켜 대본을 씁니다.",
+    "", "=== 채널 규칙 ===", BRAND,
+    "", "=== 숏폼 규칙 ===", SHORTS_RULE,
+    guideText.trim() ? "\n=== 이 채널의 추가 지침 (반드시 반영) ===\n" + guideText.trim() : "",
+    tg ? "\n=== 이 편에만 적용할 지침 (최우선 반영) ===\n" + tg : "",
+    "", "=== 이번 편 ===",
+    seasonLine,
+    `제목: ${t.title}`,
+    t.message ? `핵심 메시지: ${t.message}`
+              : "핵심 메시지: 정해지지 않았습니다. 제목에 맞는 한 문장을 직접 정하고 대본 맨 위에 적어주세요.",
+    t.hook ? `후킹으로 쓸 문장: ${t.hook}`
+           : "후킹: 정해지지 않았습니다. 첫 3초에 쓸 질문이나 단정을 직접 만들어주세요.",
+    t.angle ? `각도: ${t.angle}`
+            : "각도: 정해지지 않았습니다. 이 주제에서 사업자가 가장 오해하는 지점이나 판단이 갈리는 지점을 잡아주세요.",
+    has(t.outline) ? `본론 구성: ${t.outline.map((o,n)=>`${n+1}) ${o}`).join(" ")}`
+                   : "본론 구성: 정해지지 않았습니다. 소단락 4~6개를 직접 설계하되, 각 단락은 질문으로 시작합니다.",
+    has(t.verify) ? `수치검증이 필요한 항목: ${t.verify.join(" / ")}`
+                  : "수치검증: 세법 수치가 나오는 자리마다 [수치검증] 표시를 직접 붙여주세요.",
+    has(t.shorts) ? `숏폼으로 뽑을 것: ${t.shorts.join(" / ")}`
+                  : "숏폼: 롱폼에서 가장 강한 메시지 3개를 직접 골라 숏폼으로 만들어주세요.",
+    "",
+    "=== 출력 형식 ===",
+    "마크다운으로 다음 순서로만 씁니다. 앞뒤 인사말이나 설명 없이 대본만 출력합니다.",
+    "# (제목)",
+    "> 시즌 / 길이 / 핵심 메시지 한 줄 / 이 영상을 보고 대표가 판단할 수 있게 되는 것",
+    "## [00:00] 1. 문제 제시  … 7단계를 각각 ## 제목으로",
+    "본문에는 실제로 말할 문장을 그대로 씁니다. 요약이나 개요가 아니라 낭독 가능한 대사입니다.",
+    "그다음 '# 부록' 아래에 제목 3안 표, 썸네일 3안 표, 촬영 노트, 촬영 전 검증 목록([수치검증]/[촬영 전 확인] 전체),",
+    "숏폼 대본 3편(각각 타임코드별 대사 포함)을 씁니다."
+  ].filter(Boolean).join("\n");
+}
+
+/* 원고를 대본 형식으로 "정리"만 한다 — 문장은 손대지 않는다 */
+function buildPolishPrompt(t, draft){
+  const tg = (rec(t.id).guide || "").trim();
+  return [
+    "당신은 편집자입니다. 작가가 아닙니다.",
+    "아래 원고의 문장을 그대로 두고, 촬영용 대본 형식으로 정리만 합니다.",
+    "",
+    "=== 절대 하지 않는 것 ===",
+    "- 문장을 다시 쓰지 않습니다. 표현을 바꾸지 않습니다.",
+    "- 문어체를 구어체로 고치지 않습니다. 말투를 손대지 않습니다.",
+    "- 내용을 요약하거나 늘리지 않습니다.",
+    "- 원고에 없는 내용·수치·사례·판단을 추가하지 않습니다.",
+    "- 순서를 크게 바꾸지 않습니다. 원고의 흐름을 그대로 따릅니다.",
+    "- 원고의 문장을 빼지 않습니다. 출력에는 원고의 모든 문장이 남아 있어야 합니다.",
+    "",
+    "=== 하는 일은 이것뿐입니다 ===",
+    "1. 마크다운 제목(##)으로 단락을 나눕니다. 제목은 원고에 있는 표현에서 가져옵니다.",
+    "2. 각 단락 앞에 [00:00] 형태의 타임코드를 붙입니다. 분량에 맞춰 대략 배분합니다.",
+    "3. 화면 자막으로 쓸 만한 문장을 원문에서 골라, 그 문장 아래에 `[자막] 고른 문장` 을 한 줄 덧붙입니다. 원문 문장은 지우지 않고 그대로 둡니다.",
+    "4. 그래픽이 필요해 보이는 자리에 `[그래픽] 무엇을 보여줄지` 를 한 줄 덧붙입니다.",
+    "5. 세법 수치·요건·기한이 나온 자리 뒤에 `[수치검증] 확인할 항목` 을 덧붙입니다.",
+    "6. 원고에 판단(‘저라면 ~합니다’ 같은)이 비어 보이는 자리에 `[촬영 전 확인] 어떤 판단이 필요한지` 를 덧붙입니다. 판단을 대신 지어내지 않습니다.",
+    "7. 줄바꿈과 문단 나누기를 정돈하고, 명백한 오탈자와 띄어쓰기만 고칩니다.",
+    "",
+    "덧붙이는 표시는 모두 원문과 별개의 줄로 넣습니다. 원문 문장 안에 끼워 넣지 않습니다.",
+    tg ? "" : "",
+    tg ? "=== 이 편에만 적용할 지침 ===" : "",
+    tg,
+    "",
+    "=== 참고: 이 채널의 대본 형식 ===",
+    "권장 흐름은 문제 제시 → 의외성 → 오늘 얻을 것 → 자기소개 → 본론 → 판단 → CTA 입니다.",
+    "원고가 이 흐름과 다르면 억지로 맞추지 말고, 원고의 순서를 그대로 두되 단락만 나눕니다.",
+    "",
+    "=== 원고 ===",
+    draft,
+    "",
+    "=== 출력 ===",
+    "앞뒤 설명 없이 정리된 대본만 출력합니다.",
+    "맨 위에 원고 제목이 없으면 `# " + (t.title || "제목 없음") + "` 을 붙입니다.",
+    "맨 아래에 `# 정리하면서 붙인 표시` 를 두고, 수치검증 몇 건·촬영 전 확인 몇 건을 붙였는지 한 줄로 적습니다.",
+    "원고 문장을 고치지 않았다는 점을 스스로 확인한 뒤 출력합니다."
+  ].filter(Boolean).join(String.fromCharCode(10));
+}
+
+async function runSample(prompt, t){
+  if (!SAMPLE){ byId("sheetState").textContent = "이 화면에서는 대본 생성을 쓸 수 없습니다"; return; }
+  const body = byId("sheetBody"), st = byId("sheetState");
+  sheet.aborter = new AbortController();
+  st.innerHTML = '<span class="spin"></span> 쓰는 중…';
+  byId("btnRegen").textContent = "중단";
+  body.innerHTML = '<div class="md"><p style="color:var(--muted)">생각하는 중입니다…</p></div>';
+  try {
+    const res = await SAMPLE(prompt, {
+      modelTier: "complex",
+      signal: sheet.aborter.signal,
+      onText: ({text}) => { body.innerHTML = `<div class="md">${mdToHtml(text)}</div>`; }
+    });
+    const text = (res && res.text) || "";
+    saved.set(t.id, Object.assign({}, rec(t.id), {id:t.id, title:t.title, script:text}));
+    body.innerHTML = `<div class="md">${mdToHtml(text)}</div>`;
+    st.textContent = res && res.truncated ? "길이 제한으로 잘렸습니다 — 다시 눌러보세요" : "";
+    await persist(t.id);
+    renderTopics(); renderSeasons(); renderSchedule(); renderSeries();
+    byId("btnEdit").disabled = false; paintStatus();
+  } catch (e) {
+    const c = e && e.code;
+    st.textContent = c === "cancelled" ? "중단했습니다"
+      : c === "not_granted" ? "대본 생성 권한이 없습니다"
+      : c === "rate_limited" ? "잠시 후 다시 시도해 주세요"
+      : "생성에 실패했습니다 — 다시 눌러보세요";
+    if (c === "cancelled" && e.text) body.innerHTML = `<div class="md">${mdToHtml(e.text)}</div>`;
+  } finally {
+    sheet.aborter = null;
+    byId("btnRegen").textContent = "다시 만들기";
+  }
+}
+
+async function generate(t){
+  return runSample(buildPrompt(t), t);
+}
+
+async function polish(t){
+  const draft = (byId("draftIn").value || "").trim();
+  if (draft.length < 50){
+    byId("sheetState").textContent = "다듬을 원고를 붙여넣어 주세요";
+    byId("draftIn").focus();
+    return;
+  }
+  return runSample(buildPolishPrompt(t, draft), t);
+}
+
+async function persist(id){
+  if (!DB) return;
+  const r = rec(id);
+  try {
+    await DB.doc("topics/" + id.toLowerCase()).set({id, title:r.title||"", script:r.script||"",
+      guide:r.guide||"", draft:r.draft||"", status:r.status||"", statusAt:r.statusAt||"",
+      seriesId:r.seriesId||"", shootAt:r.shootAt||"", uploadAt:r.uploadAt||""});
+    flash();
+  } catch(err){
+    const st = byId("sheetState");
+    const c = err && err.code;
+    const msg = c === "quota_exceeded" ? "저장 공간이 가득 찼습니다"
+      : c === "resource_exhausted" ? "저장이 잠시 밀립니다 — 잠깐 후 다시 해주세요"
+      : c === "revoked" || c === "not_granted" ? "저장 권한이 없습니다"
+      : "저장에 실패했습니다";
+    if (st) st.textContent = msg;
+    setConn(false, msg);
+  }
+}
+
+/* ── 모달 ───────────────── */
+function openSheet(id){
+  const t = findTopic(id); if (!t) return;
+  sheet.id = id; sheet.editing = false;
+  byId("sheetCode").textContent = `${t.season.id} · ${id}`;
+  byId("sheetName").textContent = t.title;
+  byId("topicGuide").value = rec(id).guide || "";
+  byId("topicGuide").disabled = !DB;
+  byId("draftIn").value = rec(id).draft || "";
+  byId("draftIn").disabled = !DB;
+  byId("btnPolish").disabled = !SAMPLE;
+  byId("btnAsIs").disabled = !DB;
+  byId("btnFile").disabled = !DB;
+  byId("fileNote").textContent = "";
+  byId("modal").hidden = false;
+  document.body.style.overflow = "hidden";
+  byId("btnEdit").disabled = !hasScript(id);
+  paintStatus();
+  if (hasScript(id)) paint(); else generate(t);
+}
+function paint(){
+  const body = byId("sheetBody"), txt = rec(sheet.id).script || "";
+  if (sheet.editing){
+    body.innerHTML = "";
+    const ta = document.createElement("textarea");
+    ta.value = txt; ta.id = "editor"; ta.spellcheck = false;
+    body.appendChild(ta); ta.focus();
+  } else {
+    body.innerHTML = `<div class="md">${mdToHtml(txt)}</div>`;
+    body.scrollTop = 0;
+  }
+  byId("btnEdit").textContent = sheet.editing ? "저장" : "고치기";
+  byId("btnEdit").classList.toggle("primary", sheet.editing);
+}
+function paintStatus(){
+  const st = statusOf(sheet.id);
+  const rev = byId("btnReview"), shot = byId("btnShot");
+  const can = hasScript(sheet.id) && !!DB;
+  rev.disabled = !can;
+  rev.textContent = st ? "검토 완료됨 ✓" : "검토 완료";
+  rev.classList.toggle("primary", !!st);
+  shot.hidden = st !== "reviewed";
+  shot.disabled = !can;
+}
+
+function closeSheet(){
+  if (sheet.aborter) sheet.aborter.abort();
+  byId("modal").hidden = true; document.body.style.overflow = "";
+  sheet.id = null; sheet.editing = false;
+}
+
+/* ── 주제 추가·삭제 ───────────────── */
+async function addTopic(){
+  const title = (byId("ntTitle").value || "").trim();
+  const msg = byId("addMsg");
+  if (!title){ msg.textContent = "제목은 넣어주세요"; byId("ntTitle").focus(); return; }
+  if (!DB){ msg.textContent = "읽기 전용이라 저장되지 않습니다"; return; }
+
+  const id = curSeason + "-C" + Date.now().toString(36).toUpperCase();
+  const rec = {
+    id, seasonId: curSeason, title,
+    message: (byId("ntMsg").value || "").trim(),
+    hook: (byId("ntHook").value || "").trim(),
+    angle: (byId("ntAngle").value || "").trim(),
+    outline: [], verify: [], shorts: [], next: [],
+    createdAt: new Date().toISOString()
+  };
+  msg.textContent = "저장 중…";
+  try {
+    await DB.doc("custom/" + id.toLowerCase()).set(rec);
+    custom.set(id, rec);
+    addOpen = false;
+    renderTopics(); renderChips(); renderSeasons();
+    flash();
+  } catch (err) {
+    msg.textContent = err && err.code === "quota_exceeded"
+      ? "주제를 더 만들 수 없습니다 — 쓰지 않는 주제를 지워주세요"
+      : "저장에 실패했습니다";
+  }
+}
+
+async function removeTopic(id, btn){
+  const t = custom.get(id);
+  if (!t || !DB) return;
+  if (btn && !askAgain(btn, "del:" + id,
+      hasScript(id) ? "대본도 지웁니다 — 한 번 더" : "정말 지울까요? — 한 번 더")) return;
+  custom.delete(id); saved.delete(id); openTopics.delete(id);
+  renderTopics(); renderChips(); renderSeasons();
+  try {
+    await DB.doc("custom/" + id.toLowerCase()).delete();
+    await DB.doc("topics/" + id.toLowerCase()).delete();
+    flash();
+  } catch(_){}
+}
+
+/* ── 시리즈 CRUD ───────────────── */
+async function saveSeries(id){
+  const name = (byId("serName").value || "").trim();
+  const msg = byId("serMsg");
+  if (!name){ msg.textContent = "관리용 이름은 넣어주세요"; byId("serName").focus(); return; }
+  if (!DB){ msg.textContent = "읽기 전용이라 저장되지 않습니다"; return; }
+  const isNew = !id || id === "new";
+  const sid = isNew ? "SR" + Date.now().toString(36).toUpperCase() : id;
+  const prev = series.get(sid) || {};
+  const rec_ = {
+    id: sid, name,
+    title: (byId("serTitle").value || "").trim(),
+    desc: (byId("serDesc").value || "").trim(),
+    order: prev.order != null ? prev.order : series.size
+  };
+  msg.textContent = "저장 중…";
+  try {
+    await DB.doc("series/" + sid.toLowerCase()).set(rec_);
+    series.set(sid, rec_);
+    editingSeries = null;
+    renderSeries(); renderChips(); renderTopics();
+    flash();
+  } catch(_){ msg.textContent = "저장에 실패했습니다"; }
+}
+
+async function deleteSeries(id, btn){
+  const x = series.get(id); if (!x || !DB) return;
+  const n = topicsInSeries(id).length;
+  if (btn && !askAgain(btn, "serdel:" + id,
+      n ? `주제 ${n}개는 남습니다 — 한 번 더` : "정말 지울까요? — 한 번 더")) return;
+
+  const affected = topicsInSeries(id);
+  series.delete(id);
+  if (curSeries === id) curSeries = null;
+  renderSeries(); renderChips(); renderTopics();
+  try {
+    await DB.doc("series/" + id.toLowerCase()).delete();
+    for (const {t} of affected){
+      saved.set(t.id, Object.assign({}, rec(t.id), {seriesId: ""}));
+      await persist(t.id);
+    }
+  } catch(_){}
+}
+
+async function setField(id, field, value){
+  saved.set(id, Object.assign({}, rec(id), {id, [field]: value}));
+  renderTopics(); renderSchedule(); renderSeries();
+  await persist(id);
+}
+
+/* ── 이벤트 ───────────────── */
+document.addEventListener("click", e => {
+  const go = e.target.closest("[data-goseason]");
+  if (go){ curSeason = go.dataset.goseason; switchTab("top"); renderChips(); renderTopics();
+           window.scrollTo({top:0}); return; }
+  const chip = e.target.closest("[data-season]");
+  if (chip){ curSeason = chip.dataset.season; renderChips(); renderTopics(); return; }
+  const sc2 = e.target.closest("[data-series]");
+  if (sc2){ curSeries = sc2.dataset.series; renderChips(); renderTopics(); return; }
+  const vb = e.target.closest(".vbtn");
+  if (vb){ viewMode = vb.dataset.view; renderChips(); renderTopics(); return; }
+  const se = e.target.closest("[data-seredit]");
+  if (se){ const id = se.dataset.seredit;
+    editingSeries = (editingSeries === id) ? null : id; renderSeries(); return; }
+  const sv = e.target.closest("[data-serview]");
+  if (sv){ viewMode = "series"; curSeries = sv.dataset.serview;
+    switchTab("top"); renderChips(); renderTopics(); window.scrollTo({top:0}); return; }
+  const sd = e.target.closest("[data-serdel]");
+  if (sd){ deleteSeries(sd.dataset.serdel, sd); return; }
+  if (e.target.id === "serNew"){ editingSeries = "new"; renderSeries();
+    setTimeout(() => byId("serName") && byId("serName").focus(), 0); return; }
+  if (e.target.id === "serSave"){ saveSeries(editingSeries); return; }
+  if (e.target.id === "serCancel"){ editingSeries = null; renderSeries(); return; }
+  const tg = e.target.closest("[data-toggle]");
+  if (tg){ const id = tg.dataset.toggle;
+    if (openTopics.has(id)) openTopics.delete(id); else openTopics.add(id);
+    renderTopics(); return; }
+  const sc = e.target.closest("[data-script]");
+  if (sc){ openSheet(sc.dataset.script); return; }
+  if (e.target.id === "addToggle"){ addOpen = !addOpen; renderTopics();
+    if (addOpen) setTimeout(() => byId("ntTitle") && byId("ntTitle").focus(), 0); return; }
+  if (e.target.id === "addSave"){ addTopic(); return; }
+  const del = e.target.closest("[data-del]");
+  if (del){ removeTopic(del.dataset.del, del); return; }
+  const shot = e.target.closest("[data-shot]");
+  if (shot){ setStatus(shot.dataset.shot, "shot"); return; }
+  const un = e.target.closest("[data-unshot]");
+  if (un){ setStatus(un.dataset.unshot, "reviewed"); return; }
+  const tab = e.target.closest(".tab");
+  if (tab){ switchTab(tab.dataset.tab); return; }
+});
+document.addEventListener("change", e => {
+  const t = e.target;
+  if (t.dataset && t.dataset.setser){ setField(t.dataset.setser, "seriesId", t.value); return; }
+  if (t.dataset && t.dataset.setshoot){ setField(t.dataset.setshoot, "shootAt", t.value); return; }
+  if (t.dataset && t.dataset.setupload){ setField(t.dataset.setupload, "uploadAt", t.value); return; }
+});
+
+function switchTab(name){
+  document.querySelectorAll(".tab").forEach(t =>
+    t.setAttribute("aria-selected", String(t.dataset.tab === name)));
+  ["cal","top","ser","sch","gui"].forEach(n => byId("tab-" + n).hidden = (n !== name));
+  if (name === "sch") renderSchedule();
+  if (name === "ser") renderSeries();
+}
+
+byId("btnClose").addEventListener("click", closeSheet);
+byId("modal").addEventListener("click", e => { if (e.target.id === "modal" && !sheet.editing) closeSheet(); });
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape" && !byId("modal").hidden && !sheet.editing) closeSheet();
+});
+byId("btnEdit").addEventListener("click", async () => {
+  if (sheet.editing){
+    const ta = byId("editor");
+    if (ta) saved.set(sheet.id, Object.assign({}, rec(sheet.id), {script: ta.value}));
+    sheet.editing = false; await persist(sheet.id);
+  } else sheet.editing = true;
+  paint();
+});
+byId("btnReview").addEventListener("click", async () => {
+  const id = sheet.id, st = byId("sheetState");
+  if (!id) return;
+  if (!DB){ st.textContent = "저장 연결이 없어 검토 상태를 바꿀 수 없습니다"; return; }
+  if (!hasScript(id)){ st.textContent = "대본을 먼저 만들어 주세요"; return; }
+
+  if (statusOf(id)){ await setStatus(id, ""); paintStatus();
+    st.textContent = "검토 완료를 해제했습니다"; return; }
+
+  const m = markersLeft(rec(id).script);
+  if (m.num || m.judge){
+    const parts = [];
+    if (m.num) parts.push(`수치검증 ${m.num}`);
+    if (m.judge) parts.push(`확인 ${m.judge}`);
+    if (!askAgain(byId("btnReview"), "rev:" + id, `${parts.join(" · ")} 남음 — 한 번 더`)){
+      st.textContent = "아직 채우지 않은 항목이 있습니다. 그대로 완료하려면 한 번 더 누르세요.";
+      return;
+    }
+  }
+  await setStatus(id, "reviewed");
+  paintStatus();
+  st.textContent = "검토 완료 — 발행 일정 탭의 촬영 대기로 옮겼습니다";
+});
+byId("btnShot").addEventListener("click", async () => {
+  await setStatus(sheet.id, "shot");
+  paintStatus();
+});
+
+byId("btnRegen").addEventListener("click", () => {
+  if (sheet.aborter){ sheet.aborter.abort(); return; }
+  const t = findTopic(sheet.id);
+  if (t) generate(t);
+});
+function readTextFile(file){
+  return new Promise((res, rej) => {
+    const r = new FileReader();
+    r.onload = () => res(String(r.result || ""));
+    r.onerror = () => rej(new Error("read"));
+    r.readAsText(file, "utf-8");
+  });
+}
+
+async function loadDraftFile(file){
+  const note = byId("fileNote"), st = byId("sheetState");
+  if (!file) return;
+  if (file.size > 200000){
+    note.textContent = "";
+    st.textContent = "파일이 너무 큽니다 — 200KB 이하로 올려주세요";
+    return;
+  }
+  try {
+    const text = await readTextFile(file);
+    const ta = byId("draftIn");
+    ta.value = text;
+    ta.dispatchEvent(new Event("input", {bubbles: true}));
+    note.textContent = file.name + " · " + text.length.toLocaleString() + "자 불러왔습니다";
+    st.textContent = "";
+  } catch(_){
+    note.textContent = "";
+    st.textContent = "파일을 읽지 못했습니다";
+  }
+}
+
+byId("btnFile").addEventListener("click", () => byId("fileIn").click());
+byId("fileIn").addEventListener("change", e => {
+  const f = e.target.files && e.target.files[0];
+  loadDraftFile(f);
+  e.target.value = "";        // 같은 파일을 다시 올릴 수 있게
+});
+
+(function(){
+  const dz = byId("draftIn");
+  ["dragenter","dragover"].forEach(ev => dz.addEventListener(ev, e => {
+    e.preventDefault(); e.stopPropagation(); dz.classList.add("dropping");
+  }));
+  ["dragleave","dragend"].forEach(ev => dz.addEventListener(ev, e => {
+    e.preventDefault(); dz.classList.remove("dropping");
+  }));
+  dz.addEventListener("drop", e => {
+    e.preventDefault(); e.stopPropagation(); dz.classList.remove("dropping");
+    const f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+    if (f) loadDraftFile(f);
+  });
+})();
+
+byId("btnAsIs").addEventListener("click", async () => {
+  const st = byId("sheetState");
+  const draft = (byId("draftIn").value || "").trim();
+  if (!sheet.id) return;
+  if (!DB){ st.textContent = "저장 연결이 없어 넣을 수 없습니다"; return; }
+  if (draft.length < 30){ st.textContent = "원고를 먼저 넣어주세요"; byId("draftIn").focus(); return; }
+  if (hasScript(sheet.id) &&
+      !askAgain(byId("btnAsIs"), "asis:" + sheet.id, "지금 대본을 덮어씁니다 — 한 번 더")){
+    st.textContent = "이미 대본이 있습니다. 덮어쓰려면 한 번 더 누르세요.";
+    return;
+  }
+  const t = findTopic(sheet.id);
+  saved.set(sheet.id, Object.assign({}, rec(sheet.id),
+    {id: sheet.id, title: (t && t.title) || "", script: draft}));
+  sheet.editing = false;
+  paint(); paintStatus();
+  byId("btnEdit").disabled = false;
+  await persist(sheet.id);
+  renderTopics(); renderSeasons(); renderSchedule(); renderSeries();
+  st.textContent = "원고를 대본으로 넣었습니다 — 다듬지 않고 그대로입니다";
+});
+
+byId("btnPolish").addEventListener("click", () => {
+  if (sheet.aborter){ byId("sheetState").textContent = "쓰는 중입니다 — 끝난 뒤에 눌러주세요"; return; }
+  const t = findTopic(sheet.id);
+  if (t) polish(t);
+});
+
+let dTimer;
+byId("draftIn").addEventListener("input", e => {
+  saved.set(sheet.id, Object.assign({}, rec(sheet.id), {draft: e.target.value}));
+  clearTimeout(dTimer); dTimer = setTimeout(() => persist(sheet.id), 900);
+});
+
+let gTimer;
+byId("topicGuide").addEventListener("input", e => {
+  saved.set(sheet.id, Object.assign({}, rec(sheet.id), {guide: e.target.value}));
+  clearTimeout(gTimer); gTimer = setTimeout(() => persist(sheet.id), 800);
+});
+let ggTimer;
+byId("globalGuide").addEventListener("input", e => {
+  guideText = e.target.value;
+  clearTimeout(ggTimer);
+  ggTimer = setTimeout(async () => {
+    if (!DB) return;
+    try { await DB.doc("guide/global").set({text: guideText}); flash(); } catch(_){}
+  }, 800);
+});
+
+const PRESETS = [
+  ["문장 더 짧게", "문장을 더 짧게 씁니다. 한 문장에 한 가지만 말합니다."],
+  ["사례 구체적으로", "예시를 들 때 업종과 금액을 구체적으로 지정합니다."],
+  ["숫자 강조", "핵심 숫자는 문장 앞에 배치하고 [자막]으로도 강조합니다."],
+  ["더 단정적으로", "'~하시면 됩니다'보다 '~합니다'로 단정적으로 씁니다."],
+  ["존댓말 톤 낮추기", "지나치게 격식 있는 표현을 줄이고 상담하듯 편하게 씁니다."],
+  ["길이 줄이기", "전체 분량을 8분 이내로 줄입니다."]
+];
+byId("presetRow").innerHTML = PRESETS.map((p,i) =>
+  `<button data-preset="${i}">+ ${esc(p[0])}</button>`).join("");
+byId("presetRow").addEventListener("click", e => {
+  const b = e.target.closest("[data-preset]"); if (!b) return;
+  const ta = byId("globalGuide");
+  const line = "- " + PRESETS[+b.dataset.preset][1];
+  ta.value = (ta.value.trim() ? ta.value.trim() + "\n" : "") + line;
+  ta.dispatchEvent(new Event("input", {bubbles:true}));
+  ta.focus();
+});
+
+function loadSnapshot(){
+  if (!SNAPSHOT) return;
+  (SNAPSHOT.series || []).forEach(x => series.set(x.id, x));
+  (SNAPSHOT.custom || []).forEach(x => custom.set(x.id, x));
+  (SNAPSHOT.topics || []).forEach(x => saved.set(x.id, x));
+  guideText = SNAPSHOT.guide || "";
+  const g = byId("globalGuide");
+  if (g) g.value = guideText;
+}
+
+/* ── 첫 렌더 ───────────────── */
+loadSnapshot();
+curSeason = DATA.seasons.slice().sort((a,b)=>a.priority-b.priority)[0].id;
+renderNow(); renderSeasons(); renderChips(); renderTopics(); renderSchedule(); renderSeries();
+
+/* ── 연결 ───────────────── */
+function setConn(ok, txt){ byId("connDot").classList.toggle("on", !!ok); byId("connText").textContent = txt; }
+
+(async function(){
+  const canUse = window.claude && typeof window.claude.use === "function";
+  const [db, sp] = canUse
+    ? await Promise.all([
+        window.claude.use("db").catch(() => null),
+        window.claude.use("sample").catch(() => null)
+      ])
+    : [null, null];
+  DB = db; SAMPLE = sp;
+
+  if (SNAPSHOT){
+    setConn(false, "공유본 · 읽기 전용" + (SNAPSHOT.builtAt ? " (" + SNAPSHOT.builtAt + " 기준)" : ""));
+    byId("roBanner").hidden = false;
+    byId("globalGuide").disabled = true;
+    renderSeries(); renderTopics();
+    return;
+  }
+
+  const parts = [];
+  parts.push(db ? "저장됩니다" : "읽기 전용");
+  parts.push(sp ? "대본 생성 가능" : "대본 생성 불가");
+  setConn(!!db, parts.join(" · "));
+  byId("roBanner").hidden = !!db;
+  byId("globalGuide").disabled = !db;
+  renderSeries(); renderTopics();
+
+  if (!db) return;
+
+  db.doc("guide/global").onSnapshot(s => {
+    const t = (s.data() || {}).text || "";
+    if (t !== guideText && document.activeElement !== byId("globalGuide")){
+      guideText = t; byId("globalGuide").value = t;
+    }
+  }, ()=>{});
+
+  db.collection("series").onSnapshot(s => {
+    let ch = false;
+    s.docs.forEach(d => {
+      const b = d.data() || {};
+      const id = b.id || d.id.toUpperCase();
+      if (series.get(id) !== b){ series.set(id, b); ch = true; }
+    });
+    s.docChanges().forEach(c => { if (c.type === "removed"){
+      const b = c.doc.data() || {}; series.delete(b.id || c.doc.id.toUpperCase()); ch = true; } });
+    if (ch){ renderSeries(); renderChips(); renderTopics(); renderSchedule(); }
+  }, ()=>{});
+
+  db.collection("custom").onSnapshot(s => {
+    let ch = false;
+    s.docs.forEach(d => {
+      const b = d.data() || {};
+      const id = b.id || d.id.toUpperCase();
+      if (custom.get(id) !== b){ custom.set(id, b); ch = true; }
+    });
+    s.docChanges().forEach(c => { if (c.type === "removed"){
+      const b = c.doc.data() || {}; custom.delete(b.id || c.doc.id.toUpperCase()); ch = true; } });
+    if (ch){ renderChips(); renderSeasons(); renderTopics(); renderSeries(); }
+  }, ()=>{});
+
+  db.collection("topics").onSnapshot(s => {
+    let ch = false;
+    s.docs.forEach(d => {
+      const b = d.data() || {};
+      const id = b.id || d.id.toUpperCase();
+      if (saved.get(id) !== b){ saved.set(id, b); ch = true; }
+    });
+    if (!ch) return;
+    renderSeasons(); renderTopics(); renderSchedule(); renderSeries();
+    if (sheet.id && !sheet.editing && !sheet.aborter){ paintStatus(); if (hasScript(sheet.id)) paint(); }
+  }, ()=>{});
+})();
+</script>

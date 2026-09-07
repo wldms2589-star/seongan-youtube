@@ -1,0 +1,12 @@
+# 작업 중 임시 파일
+*.tmp
+_check.js
+_c.js
+.DS_Store
+Thumbs.db
+
+# OMC 상태
+.omc/
+
+# 원본 기획안(docx)은 저장소에 올리지 않습니다 — 필요하면 이 줄을 지우세요
+guide/*.docx
