@@ -2,9 +2,31 @@
 
 세무 신고 시즌을 축으로 주제를 정하고, 지침을 쌓아가며 대본을 만드는 작업 공간입니다.
 
-## 대시보드
+## 두 개의 주소
 
-**https://claude.ai/code/artifact/44ad5dbc-1217-46ce-9310-e62598e42658**
+| | 주소 | 무엇 |
+|---|---|---|
+| **작업용 보드** | [claude.ai 아티팩트](https://claude.ai/code/artifact/44ad5dbc-1217-46ce-9310-e62598e42658) | 편집·대본 생성·검토. 세무사님 전용 |
+| **공유본** | https://wldms2589-star.github.io/seongan-youtube/ | 읽기 전용. 제작사·직원에게 링크로 공유 |
+
+작업용 보드는 저장 기능 때문에 조직 밖으로 공유되지 않습니다.
+그래서 지금 데이터를 그대로 담은 읽기 전용 사본을 GitHub Pages 로 따로 올렸습니다.
+
+### 공유본 갱신
+보드에서 대본을 만들거나 일정을 바꾸신 뒤, Claude Code 에 **"공유본 갱신해줘"** 라고 하시면 됩니다.
+직접 하시려면:
+
+```bash
+python dashboard/build_share.py                 # 대본까지 포함
+python dashboard/build_share.py --no-scripts    # 대본은 빼고
+git add docs && git commit -m "공유본 갱신" && git push
+```
+
+> ⚠️ 저장소가 공개라 **대본이 GitHub 에서 그대로 열람됩니다.**
+> 페이지 자체는 검색에 안 잡히게(`noindex`) 해뒀지만, 저장소 파일은 공개입니다.
+> 대본을 감추려면 `--no-scripts` 로 다시 굽고 `scripts/`, `dashboard/snapshot/` 을 `.gitignore` 에 넣으세요.
+
+## 작업용 보드
 
 | 탭 | 무엇을 하나 |
 |---|---|
@@ -13,6 +35,8 @@
 | **시리즈** | 주제를 묶는 축. 이름을 직접 만들고 주제를 담습니다 |
 | **발행 일정** | 촬영일·업로드일 관리. 업로드 날짜별로 그날 나갈 영상이 묶여 보입니다 |
 | **대본 지침** | 여기 적은 내용이 모든 대본 생성에 적용됩니다 |
+
+> 공유본에서는 위 기능이 전부 읽기 전용입니다. 편집은 작업용 보드에서만 됩니다.
 
 ### 세 개의 축
 
@@ -107,7 +131,13 @@ planning/
 scripts/
   archive/                상시 주제 대본 15편 (롱폼 15 + 숏폼 46) — 대시보드에도 올려져 있습니다
   season/                 시즌 주제 대본이 여기 쌓입니다
-guide/                    원본 기획안 (docx)
+dashboard/
+  board.html              대시보드 원본 (아티팩트와 같은 파일)
+  build_share.py          공유본 빌드
+  snapshot/               보드에서 내려받은 데이터
+docs/
+  index.html              GitHub Pages 공유본 (빌드 결과물)
+guide/                    원본 기획안 (docx — 저장소에는 올리지 않음)
 ```
 
 ## 명령어
